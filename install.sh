@@ -267,9 +267,6 @@ firewall-cmd --set-log-denied=all
 firewall-cmd --permanent --remove-service=dhcpv6-client
 firewall-cmd --reload
 systemctl enable firewalld
-# Enable IP forwarding for NAT
-echo 'net.ipv4.ip_forward = 1' | tee /etc/sysctl.d/99-firewalld.conf
-sysctl --system
 # Bind dnsmasq to virbr0 only
 sed -i -E 's/^#?\s*interface=.*/interface=virbr0/; s/^#?\s*bind-interfaces.*/bind-interfaces/' /etc/dnsmasq.conf
 
@@ -279,7 +276,8 @@ net.ipv4.conf.all.rp_filter = 1
 net.ipv4.conf.default.rp_filter = 1
 net.ipv4.conf.all.send_redirects = 0
 net.ipv4.conf.default.send_redirects = 0
-# net.ipv4.ip_forward = 0
+# Enable IP forwarding for NAT
+net.ipv4.ip_forward = 1
 
 # kernel hardening
 kernel.kptr_restrict = 2
@@ -290,6 +288,7 @@ fs.protected_fifos = 2
 # bpf jit harden (if present)
 net.core.bpf_jit_harden = 2
 EOF
+sysctl --system
 
 # A anacron job
 echo "30 5 trash-empty-job runuser -u piyush -- /usr/bin/trash-empty" >>/etc/anacrontab
