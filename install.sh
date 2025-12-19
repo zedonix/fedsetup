@@ -239,10 +239,9 @@ echo "Defaults pwfeedback" >/etc/sudoers.d/pwfeedback
 echo 'Defaults env_keep += "SYSTEMD_EDITOR XDG_RUNTIME_DIR WAYLAND_DISPLAY DBUS_SESSION_BUS_ADDRESS WAYLAND_SOCKET"' >/etc/sudoers.d/wayland
 chmod 440 /etc/sudoers.d/*
 # User setup
+usermod -aG wheel,video,audio,lp,docker "$username"
 if [[ "$hardware" == "hardware" ]]; then
-  usermod -aG wheel,video,audio,lp,kvm,libvirt "$username"
-else
-  usermod -aG wheel,video,audio,lp,docker "$username"
+  usermod -aG kvm,libvirt "$username"
 fi
 
 # firewalld setup
@@ -353,6 +352,7 @@ su - piyush -c '
 
 if [[ "$hardware" == "hardware" ]]; then
   su - piyush -c '
+    export XDG_RUNTIME_DIR="/run/user/$(id -u)"
     flatpak install -y flathub com.github.wwmm.easyeffects
     flatpak install -y flathub no.mifi.losslesscut
     # flatpak install -y flathub com.obsproject.Studio
@@ -360,6 +360,7 @@ if [[ "$hardware" == "hardware" ]]; then
 fi
 if [[ "$extra" == "laptop" ]]; then
   su - piyush -c '
+    export XDG_RUNTIME_DIR="/run/user/$(id -u)"
     flatpak install -y flathub com.github.d4nj1.tlpui
     flatpak install -y nl.brixit.powersupply
   '
