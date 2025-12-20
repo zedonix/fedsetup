@@ -358,7 +358,6 @@ nix profile add \
   nixpkgs#cliphist \
   nixpkgs#wl-clip-persist \
   nixpkgs#onlyoffice-desktopeditors \
-  nixpkgs#wayland-pipewire-idle-inhibit \
   nixpkgs#networkmanager_dmenu \
   nixpkgs#newsraft \
   nixpkgs#caligula \
