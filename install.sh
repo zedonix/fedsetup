@@ -299,7 +299,7 @@ su - piyush -c '
 
   git clone https://github.com/zedonix/scripts.git ~/Documents/personal/default/scripts
   git clone https://github.com/zedonix/dotfiles.git ~/Documents/personal/default/dotfiles
-  git clone https://github.com/zedonix/debsetup.git ~/Documents/personal/default/debsetup
+  git clone https://github.com/zedonix/fedsetup.git ~/Documents/personal/default/fedsetup
   git clone https://github.com/zedonix/notes.git ~/Documents/personal/default/notes
   git clone https://github.com/zedonix/GruvboxTheme.git ~/Documents/personal/default/GruvboxTheme
 
