@@ -242,26 +242,29 @@ if [[ "$hardware" == "hardware" ]]; then
 fi
 
 # firewalld setup
-# firewall-cmd --set-default-zone=public
-# Allow LAN (192.168.0.0/24) and SSH from LAN only
-firewall-cmd --permanent --zone=public --add-source=192.168.0.0/24
-# firewall-cmd --permanent --zone=public --add-service=ssh
-# Deny CUPS in public zone
+firewall-cmd --permanent --zone=home --add-source=192.168.0.0/24
+# firewall-cmd --permanent --zone=home --remove-service=mdns
+firewall-cmd --permanent --zone=public --remove-service=ssh
 firewall-cmd --permanent --zone=public --remove-service=cups
+firewall-cmd --permanent --zone=public --remove-service=mdns
 firewall-cmd --permanent --zone=public --remove-port=631/tcp
-# Create libvirt zone and assign virtual bridge
-# firewall-cmd --permanent --new-zone=libvirt
 firewall-cmd --permanent --zone=libvirt --add-interface=virbr0
-# Only allow DHCP and DNS for libvirt guests
 firewall-cmd --permanent --zone=libvirt --add-service=dhcp
 firewall-cmd --permanent --zone=libvirt --add-service=dns
-# Enable NAT (masquerade) for routed traffic
 firewall-cmd --permanent --zone=libvirt --add-masquerade
-# Log all denied packets
+firewall-cmd --permanent --zone=FedoraWorkstation --remove-port=1025-65535/tcp
+firewall-cmd --permanent --zone=FedoraWorkstation --remove-port=1025-65535/udp
+firewall-cmd --permanent --zone=FedoraServer --remove-service=ssh
+firewall-cmd --permanent --zone=FedoraWorkstation --remove-service=ssh
+firewall-cmd --permanent --zone=dmz --remove-service=ssh
+firewall-cmd --permanent --zone=external --remove-service=ssh
+firewall-cmd --permanent --zone=internal --remove-service=ssh
+firewall-cmd --permanent --zone=nm-shared --remove-service=ssh
+firewall-cmd --permanent --zone=work --remove-service=ssh
+firewall-cmd --permanent --zone=work --remove-service=ssh
+firewall-cmd --permanent --zone=work --remove-service=mdns
 firewall-cmd --set-log-denied=all
-# firewall-cmd --permanent --zone=public --add-rich-rule='rule family=ipv4 log prefix="FW-DENY " level=info reject'
-# Remove unused services
-firewall-cmd --permanent --remove-service=dhcpv6-client
+# firewall-cmd --permanent --remove-service=dhcpv6-client
 firewall-cmd --reload
 systemctl enable firewalld
 # Bind dnsmasq to virbr0 only
