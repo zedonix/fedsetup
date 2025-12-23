@@ -357,25 +357,24 @@ ln -sf /home/piyush/Documents/personal/default/dotfiles/.config/nvim/ ~/.config
 source ~/.bashrc
 systemctl restart nix-daemon
 
-nix profile add \
-  nixpkgs#hyprpicker \
-  nixpkgs#bemoji \
-  nixpkgs#lazydocker \
-  nixpkgs#upscaler \
-  nixpkgs#cliphist \
-  nixpkgs#wl-clip-persist \
-  nixpkgs#onlyoffice-desktopeditors \
-  nixpkgs#networkmanager_dmenu \
-  nixpkgs#newsraft \
-  nixpkgs#caligula \
-  nixpkgs#opencode \
-  nixpkgs#javaPackages.compiler.temurin-bin.jre-17 \
-  nixpkgs#yazi \
-  nixpkgs#eza \
-  nixpkgs#unp \
-  nixpkgs#starship \
-  nixpkgs#poweralertd
-# nix build nixpkgs#opencode --no-link --no-substitute
+su - piyush -c '
+  nix profile add \
+    nixpkgs#hyprpicker \
+    nixpkgs#bemoji \
+    nixpkgs#lazydocker \
+    nixpkgs#upscaler \
+    nixpkgs#cliphist \
+    nixpkgs#wl-clip-persist \
+    nixpkgs#onlyoffice-desktopeditors \
+    nixpkgs#networkmanager_dmenu \
+    nixpkgs#newsraft \
+    nixpkgs#caligula \
+    nixpkgs#opencode \
+    nixpkgs#javaPackages.compiler.temurin-bin.jre-17 \
+    nixpkgs#poweralertd
+  # nix build nixpkgs#opencode --no-link --no-substitute
+'
+nix profile add nixpkgs#yazi nixpkgs#starship nixpkgs#eza
 
 git clone --depth 1 https://gitlab.com/ananicy-cpp/ananicy-cpp.git
 cd ananicy-cpp
