@@ -155,6 +155,16 @@ SATA_LINKPWR_ON_BAT=min_power
 # Charging thresholds (only functional if tlp-rdw and hardware support)
 START_CHARGE_THRESH_BAT0=40
 STOP_CHARGE_THRESH_BAT0=80
+
+# --- Radio device wizard (tlp-rdw) ---
+DEVICES_TO_DISABLE_ON_BAT="bluetooth wwan"
+DEVICES_TO_ENABLE_ON_BAT=""
+
+DEVICES_TO_DISABLE_ON_AC=""
+DEVICES_TO_ENABLE_ON_AC=""
+
+DEVICES_TO_DISABLE_ON_LAN_CONNECT="wifi"
+DEVICES_TO_DISABLE_ON_WIFI_CONNECT="wwan"
 EOF
 
   # CPU-specific settings by driver
