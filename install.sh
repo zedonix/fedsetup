@@ -325,6 +325,7 @@ sudo -iu piyush nix profile add \
   nixpkgs#onlyoffice-desktopeditors \
   nixpkgs#networkmanager_dmenu \
   nixpkgs#newsraft \
+  nixpkgs#swappy \
   nixpkgs#caligula \
   nixpkgs#opencode \
   nixpkgs#javaPackages.compiler.temurin-bin.jre-17 \
