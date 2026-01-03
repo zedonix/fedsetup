@@ -403,6 +403,8 @@ mkdir -p /etc/systemd/zram-generator.conf.d
 # rfkill unblock bluetooth
 # modprobe btusb || true
 if [[ "$hardware" == "hardware" ]]; then
+  waydroid init -c https://ota.waydro.id/system -v https://ota.waydro.id/vendor -s GAPPS
+  waydroid shell -- sh -c "pm uninstall --user 0 com.google.android.googlequicksearchbox"
   systemctl enable fstrim.timer acpid libvirtd.socket cups ipp-usb docker.socket
   systemctl disable dnsmasq
 fi
