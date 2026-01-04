@@ -220,7 +220,7 @@ firewall-cmd --permanent --zone=nm-shared --remove-service=ssh
 firewall-cmd --permanent --zone=work --remove-service=ssh
 firewall-cmd --permanent --zone=work --remove-service=ssh
 firewall-cmd --permanent --zone=work --remove-service=mdns
-firewall-cmd --set-log-denied=all
+# firewall-cmd --set-log-denied=all
 # firewall-cmd --permanent --remove-service=dhcpv6-client
 firewall-cmd --reload
 systemctl enable firewalld
