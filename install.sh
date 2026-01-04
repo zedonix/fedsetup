@@ -76,7 +76,8 @@ dnf makecache
 dnf config-manager setopt fedora-cisco-openh264.enabled=0 # cuz fuck cisco
 xargs dnf install -y <pkglist.txt
 
-cat <<'EOF' >/etc/tlp.d/01-custom.conf
+if [[ "$extra" == "laptop" ]]; then
+  cat <<'EOF' >/etc/tlp.d/01-custom.conf
 # Custom TLP overrides for Fedora laptop
 # Focus: USB stability, AC performance, audio stability, and radio power management
 
@@ -131,9 +132,7 @@ DEVICES_TO_ENABLE_ON_AC=""
 DEVICES_TO_DISABLE_ON_LAN_CONNECT="wifi"
 DEVICES_TO_DISABLE_ON_WIFI_CONNECT="wwan"
 EOF
-
-# Reload TLP to apply changes
-systemctl restart tlp
+fi
 
 scaling_f="/sys/devices/system/cpu/cpu0/cpufreq/scaling_driver"
 pstate_supported=false
