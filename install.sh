@@ -404,6 +404,15 @@ mkdir -p /etc/systemd/zram-generator.conf.d
 if [[ "$hardware" == "hardware" ]]; then
   # waydroid init -c https://ota.waydro.id/system -v https://ota.waydro.id/vendor -s GAPPS
   # waydroid shell -- sh -c "pm uninstall --user 0 com.google.android.googlequicksearchbox"
+  # dnf install -y lzip python3-venv
+  # git clone https://github.com/casualsnek/waydroid_script.git
+  # cd waydroid_script
+  # python3 -m venv venv
+  # venv/bin/pip install -r requirements.txt
+  # install libndk (or libhoudini)
+  # venv/bin/python3 main.py install libndk
+  # or for houdini:
+  # venv/bin/python3 main.py install libhoudini
   systemctl enable fstrim.timer acpid libvirtd.socket cups ipp-usb docker.socket
   systemctl disable dnsmasq
 fi
