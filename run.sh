@@ -65,7 +65,20 @@ cp -f ~/Documents/personal/default/dotfiles/book* "$dir/bookmarkbackups/"
 flatpak override --user --env=GTK_THEME=Adwaita-dark --env=QT_STYLE_OVERRIDE=Adwaita-Dark
 if [[ "$hardware" == "hardware" ]]; then
   flatpak install -y flathub com.github.wwmm.easyeffects
-  flatpak install -y flathub no.mifi.losslesscut
+  # sudo XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR" WAYLAND_DISPLAY="$WAYLAND_DISPLAY" waydroid shell -- sh /sdcard/Android/data/xtr.keymapper/files/xtMapper.sh --wayland-client
+  cd ~/Downloads
+  REPO="Xtr126/XtMapper"
+  curl -s "https://api.github.com/repos/$REPO/releases/latest" |
+    grep -oE 'https://[^"]+\.apk' |
+    xargs -n 1 wget
+  waydroid app install XtMapper-release-v2.4.2.apk
+  git clone https://github.com/casualsnek/waydroid_script.git
+  cd waydroid_script
+  python3 -m venv venv
+  venv/bin/pip install -r requirements.txt
+  venv/bin/python3 main.py install libndk
+  # venv/bin/python3 main.py install libhoudini
+  # flatpak install -y flathub no.mifi.losslesscut
   # flatpak install -y flathub com.obsproject.Studio
 fi
 if [[ "$extra" == "laptop" ]]; then

@@ -402,33 +402,13 @@ mkdir -p /etc/systemd/zram-generator.conf.d
 # rfkill unblock bluetooth
 # modprobe btusb || true
 if [[ "$hardware" == "hardware" ]]; then
-  # waydroid init -c https://ota.waydro.id/system -v https://ota.waydro.id/vendor -s GAPPS
-  # waydroid shell -- sh -c "pm uninstall --user 0 com.google.android.googlequicksearchbox"
-  #
-  # dnf install -y lzip python3-venv
-  # git clone https://github.com/casualsnek/waydroid_script.git
-  # cd waydroid_script
-  # python3 -m venv venv
-  # venv/bin/pip install -r requirements.txt
-  # install libndk (or libhoudini)
-  # venv/bin/python3 main.py install libndk
-  # or for houdini:
-  # venv/bin/python3 main.py install libhoudini
-  #
+  waydroid init -c https://ota.waydro.id/system -v https://ota.waydro.id/vendor -s GAPPS
+  waydroid shell -- sh -c "pm uninstall --user 0 com.google.android.googlequicksearchbox"
   # curl -fOL --retry 3 --retry-delay 3 "https://github.com/Xtr126/cage-xtmapper/releases/latest/download/cage-xtmapper-v0.2.0.tar"
   # tar xvf cage-xtmapper-v0.2.0.tar
   # cd usr/local/bin
   # install -Dm755 ./cage_xtmapper /usr/local/bin/
   # install -Dm755 ./cage_xtmapper.sh /usr/local/bin/
-  #
-  # cd /home/piyush/Downloads
-  # REPO="Xtr126/XtMapper"
-  # curl -s "https://api.github.com/repos/$REPO/releases/latest" |
-  #   grep -oE 'https://[^"]+\.apk' |
-  #   xargs -n 1 wget
-  #
-  # waydroid app install ~/Downloads/XtMapper-release-v2.4.2.apk
-  # sudo XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR" WAYLAND_DISPLAY="$WAYLAND_DISPLAY" waydroid shell -- sh /sdcard/Android/data/xtr.keymapper/files/xtMapper.sh --wayland-client
   systemctl enable fstrim.timer acpid libvirtd.socket cups ipp-usb docker.socket
   systemctl disable dnsmasq
 fi
@@ -443,4 +423,4 @@ systemctl mask systemd-rfkill systemd-rfkill.socket
 systemctl disable NetworkManager-wait-online.service
 
 # cleanup
-dnf remove -y plymouth cmake make gcc-c++ systemd-devel libbpf-devel elfutils-libelf-devel clang llvm kernel-headers bpftool
+dnf remove -y plymouth cmake make gcc-c++ systemd-devel libbpf-devel elfutils-libelf-devel clang llvm kernel-headers bpftool lzip python3-venv
