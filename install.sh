@@ -298,6 +298,7 @@ su - piyush -c '
   docker create --name omni-tools --restart no -p 1024:80 iib0011/omni-tools:latest
   docker create --name bentopdf --restart no -p 1025:8080 bentopdf/bentopdf:latest
   docker create --name convertx --restart no -p 1026:3000 -v ./data:/app/data ghcr.io/c4illin/convertx
+  docker create --name excalidraw --restart no -p 1027:80 excalidraw/excalidraw:latest
 '
 rm /usr/share/fonts/google-noto-color-emoji-fonts/Noto-COLRv1.ttf
 wget https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf -O /usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf
