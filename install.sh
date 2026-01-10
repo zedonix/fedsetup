@@ -251,40 +251,40 @@ flatpak --system install -y org.gtk.Gtk3theme.Adwaita-dark
 systemctl start docker.service
 su - piyush -c '
   mkdir -p ~/Downloads ~/Desktop ~/Public ~/Templates ~/Videos ~/Pictures/Screenshots/temp ~/.config
-  mkdir -p ~/Documents/personal/default ~/Documents/projects ~/Documents/personal/wiki
+  mkdir -p ~/Documents/projects/default ~/Documents/projects ~/Documents/personal/wiki
   mkdir -p ~/.local/bin ~/.cache/cargo-target ~/.local/state/bash ~/.local/state/zsh ~/.local/share/wineprefixes
   touch ~/.local/state/bash/history ~/.local/state/zsh/history
 
-  echo todo.txt > ~/Documents/personal/wiki/index.txt
-  echo 1. Write some todos > ~/Documents/personal/wiki/todo.txt
+  echo todo.txt > ~/Documents/projects/wiki/index.txt
+  echo 1. Write some todos > ~/Documents/projects/wiki/todo.txt
   echo "if [ -z \"\$WAYLAND_DISPLAY\" ] && [ \"\$(tty)\" = \"/dev/tty1\" ]; then
     exec sway
   fi" >> ~/.bash_profile
 
-  git clone https://github.com/zedonix/scripts.git ~/Documents/personal/default/scripts
-  git clone https://github.com/zedonix/dotfiles.git ~/Documents/personal/default/dotfiles
-  git clone https://github.com/zedonix/fedsetup.git ~/Documents/personal/default/fedsetup
-  git clone https://github.com/zedonix/notes.git ~/Documents/personal/default/notes
-  git clone https://github.com/zedonix/GruvboxTheme.git ~/Documents/personal/default/GruvboxTheme
+  git clone https://github.com/zedonix/scripts.git ~/Documents/projects/default/scripts
+  git clone https://github.com/zedonix/dotfiles.git ~/Documents/projects/default/dotfiles
+  git clone https://github.com/zedonix/fedsetup.git ~/Documents/projects/default/fedsetup
+  git clone https://github.com/zedonix/notes.git ~/Documents/projects/default/notes
+  git clone https://github.com/zedonix/GruvboxTheme.git ~/Documents/projects/default/GruvboxTheme
 
-  cp ~/Documents/personal/default/dotfiles/.config/sway/archLogo.png ~/Pictures/
-  cp ~/Documents/personal/default/dotfiles/.config/sway/debLogo.png ~/Pictures/
-  cp ~/Documents/personal/default/dotfiles/pics/* ~/Pictures/
-  ln -sf ~/Documents/personal/default/dotfiles/.bashrc ~/.bashrc
-  ln -sf ~/Documents/personal/default/dotfiles/.zshrc ~/.zshrc
-  ln -sf ~/Documents/personal/default/dotfiles/.XCompose ~/.XCompose
+  cp ~/Documents/projects/default/dotfiles/.config/sway/archLogo.png ~/Pictures/
+  cp ~/Documents/projects/default/dotfiles/.config/sway/debLogo.png ~/Pictures/
+  cp ~/Documents/projects/default/dotfiles/pics/* ~/Pictures/
+  ln -sf ~/Documents/projects/default/dotfiles/.bashrc ~/.bashrc
+  ln -sf ~/Documents/projects/default/dotfiles/.zshrc ~/.zshrc
+  ln -sf ~/Documents/projects/default/dotfiles/.XCompose ~/.XCompose
 
-  for link in ~/Documents/personal/default/dotfiles/.config/*; do
+  for link in ~/Documents/projects/default/dotfiles/.config/*; do
     ln -sf $link ~/.config/
   done
-  for link in ~/Documents/personal/default/dotfiles/copy/*; do
+  for link in ~/Documents/projects/default/dotfiles/copy/*; do
     cp -r $link ~/.config/
   done
-  for link in ~/Documents/personal/default/scripts/bin/*; do
+  for link in ~/Documents/projects/default/scripts/bin/*; do
     ln -sf $link ~/.local/bin/
   done
   git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-  zoxide add /home/piyush/Documents/personal/default/debsetup
+  zoxide add /home/piyush/Documents/projects/default/debsetup
   source ~/.bashrc
 
   # Iosevka
@@ -307,11 +307,11 @@ wget https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf
 mkdir -p ~/.config ~/.local/state/bash ~/.local/state/zsh
 echo '[[ -f ~/.bashrc ]] && . ~/.bashrc' >~/.bash_profile
 touch ~/.local/state/zsh/history ~/.local/state/bash/history
-ln -sf /home/piyush/Documents/personal/default/dotfiles/nix.conf /etc/nix/nix.conf
-ln -sf /home/piyush/Documents/personal/default/dotfiles/.bashrc ~/.bashrc
-ln -sf /home/piyush/Documents/personal/default/dotfiles/.zshrc ~/.zshrc
-ln -sf /home/piyush/Documents/personal/default/dotfiles/.config/starship.toml ~/.config
-ln -sf /home/piyush/Documents/personal/default/dotfiles/.config/nvim/ ~/.config
+ln -sf /home/piyush/Documents/projects/default/dotfiles/nix.conf /etc/nix/nix.conf
+ln -sf /home/piyush/Documents/projects/default/dotfiles/.bashrc ~/.bashrc
+ln -sf /home/piyush/Documents/projects/default/dotfiles/.zshrc ~/.zshrc
+ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/starship.toml ~/.config
+ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
 systemctl restart nix-daemon
 
@@ -341,7 +341,7 @@ cmake --build build --target ananicy-cpp
 cmake --install build --component Runtime
 
 # Setup gruvbox theme
-THEME_SRC="/home/piyush/Documents/personal/default/GruvboxTheme"
+THEME_SRC="/home/piyush/Documents/projects/default/GruvboxTheme"
 THEME_DEST="/usr/share/Kvantum/Gruvbox"
 mkdir -p "$THEME_DEST"
 cp "$THEME_SRC/gruvbox-kvantum.kvconfig" "$THEME_DEST/Gruvbox.kvconfig"
@@ -377,7 +377,7 @@ EOF
 
 # Firefox policy
 mkdir -p /etc/firefox/policies
-ln -sf "/home/piyush/Documents/personal/default/dotfiles/policies.json" /etc/firefox/policies/policies.json
+ln -sf "/home/piyush/Documents/projects/default/dotfiles/policies.json" /etc/firefox/policies/policies.json
 
 # zram config
 # Get total memory in MiB

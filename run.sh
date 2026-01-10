@@ -44,11 +44,11 @@ for key in "${!gsettings_keys[@]}"; do
 done
 
 # Firefox user.js linking
-echo -n "/home/$USER/Documents/personal/default/dotfiles/ublock.txt" | wl-copy
+echo -n "/home/$USER/Documents/projects/default/dotfiles/ublock.txt" | wl-copy
 gh auth login
 dir=$(echo ~/.mozilla/firefox/*.default-esr)
-ln -sf ~/Documents/personal/default/dotfiles/user.js "$dir/user.js"
-cp -f ~/Documents/personal/default/dotfiles/book* "$dir/bookmarkbackups/"
+ln -sf ~/Documents/projects/default/dotfiles/user.js "$dir/user.js"
+cp -f ~/Documents/projects/default/dotfiles/book* "$dir/bookmarkbackups/"
 
 # Configure static IP, gateway, and custom DNS
 # sudo tee /etc/systemd/resolved.conf <<EOF
