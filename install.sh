@@ -192,6 +192,7 @@ echo "Defaults pwfeedback" >/etc/sudoers.d/pwfeedback
 echo 'Defaults env_keep += "SYSTEMD_EDITOR XDG_RUNTIME_DIR WAYLAND_DISPLAY DBUS_SESSION_BUS_ADDRESS WAYLAND_SOCKET"' >/etc/sudoers.d/wayland
 chmod 440 /etc/sudoers.d/*
 # User setup
+useradd -m piyush
 usermod -aG wheel,video,audio,docker piyush
 if [[ "$hardware" == "hardware" ]]; then
   usermod -aG kvm,libvirt,lp piyush
@@ -200,7 +201,8 @@ fi
 # firewalld setup
 firewall-cmd --permanent --zone=home --add-source=192.168.0.0/24
 # firewall-cmd --permanent --zone=home --remove-service=mdns
-firewall-cmd --permanent --zone=public --remove-service=ssh
+# firewall-cmd --permanent --zone=public --remove-service=ssh
+# firewall-cmd --zone=public --permanent --add-rich-rule='rule family="ipv4" source address="192.168.0.0/24" service name="ssh" accept'
 firewall-cmd --permanent --zone=public --remove-service=cups
 firewall-cmd --permanent --zone=public --remove-service=mdns
 firewall-cmd --permanent --zone=public --remove-port=631/tcp
@@ -210,14 +212,14 @@ firewall-cmd --permanent --zone=libvirt --add-service=dns
 firewall-cmd --permanent --zone=libvirt --add-masquerade
 firewall-cmd --permanent --zone=FedoraWorkstation --remove-port=1025-65535/tcp
 firewall-cmd --permanent --zone=FedoraWorkstation --remove-port=1025-65535/udp
-firewall-cmd --permanent --zone=FedoraServer --remove-service=ssh
-firewall-cmd --permanent --zone=FedoraWorkstation --remove-service=ssh
-firewall-cmd --permanent --zone=dmz --remove-service=ssh
-firewall-cmd --permanent --zone=external --remove-service=ssh
-firewall-cmd --permanent --zone=internal --remove-service=ssh
-firewall-cmd --permanent --zone=nm-shared --remove-service=ssh
-firewall-cmd --permanent --zone=work --remove-service=ssh
-firewall-cmd --permanent --zone=work --remove-service=ssh
+# firewall-cmd --permanent --zone=FedoraServer --remove-service=ssh
+# firewall-cmd --permanent --zone=FedoraWorkstation --remove-service=ssh
+# firewall-cmd --permanent --zone=dmz --remove-service=ssh
+# firewall-cmd --permanent --zone=external --remove-service=ssh
+# firewall-cmd --permanent --zone=internal --remove-service=ssh
+# firewall-cmd --permanent --zone=nm-shared --remove-service=ssh
+# firewall-cmd --permanent --zone=work --remove-service=ssh
+# firewall-cmd --permanent --zone=work --remove-service=ssh
 firewall-cmd --permanent --zone=work --remove-service=mdns
 # firewall-cmd --set-log-denied=all
 # firewall-cmd --permanent --remove-service=dhcpv6-client
@@ -225,6 +227,7 @@ firewall-cmd --reload
 systemctl enable firewalld
 # Bind dnsmasq to virbr0 only
 sed -i -E 's/^#?\s*interface=.*/interface=virbr0/; s/^#?\s*bind-interfaces.*/bind-interfaces/' /etc/dnsmasq.conf
+echo 'ListenAddress 127.0.0.1' >>/etc/ssh/sshd_config
 
 tee /etc/sysctl.d/99-hardening.conf >/dev/null <<'EOF'
 # networking
@@ -295,10 +298,10 @@ su - piyush -c '
   rm IosevkaTerm.zip
 
   rustup-init -y
-  docker create --name omni-tools --restart no -p 1024:80 iib0011/omni-tools:latest
-  docker create --name bentopdf --restart no -p 1025:8080 bentopdf/bentopdf:latest
-  docker create --name convertx --restart no -p 1026:3000 -v ./data:/app/data ghcr.io/c4illin/convertx
-  docker create --name excalidraw --restart no -p 1027:80 excalidraw/excalidraw:latest
+  docker create --name omni-tools --restart no -p 127.0.0.1:1024:80 iib0011/omni-tools:latest
+  docker create --name bentopdf --restart no -p 127.0.0.1:1025:8080 bentopdf/bentopdf:latest
+  docker create --name convertx --restart no -p 127.0.0.1:1026:3000 -v ./data:/app/data ghcr.io/c4illin/convertx
+  docker create --name excalidraw --restart no -p 127.0.0.1:1027:80 excalidraw/excalidraw:latest
 '
 rm /usr/share/fonts/google-noto-color-emoji-fonts/Noto-COLRv1.ttf
 wget https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf -O /usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf
@@ -394,11 +397,12 @@ mkdir -p /etc/systemd/zram-generator.conf.d
 } >/etc/systemd/zram-generator.conf.d/00-zram.conf
 
 # docker fix
-tee /etc/systemd/system/docker.socket.d/override.conf >/dev/null <<'EOF'
-[Unit]
-After=firewalld.service
-Requires=firewalld.service
-EOF
+# mkdir /etc/systemd/system/docker.socket.d
+# tee /etc/systemd/system/docker.socket.d/override.conf >/dev/null <<'EOF'
+# [Unit]
+# After=firewalld.service
+# Requires=firewalld.service
+# EOF
 
 # Services
 # rfkill unblock bluetooth
