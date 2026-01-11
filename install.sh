@@ -330,8 +330,7 @@ sudo -iu piyush nix profile add \
   nixpkgs#javaPackages.compiler.temurin-bin.jre-17 \
   nixpkgs#poweralertd
 # sudo -iu piyush nix build nixpkgs#opencode --no-link --no-substitute
-export NIXPKGS_ALLOW_UNFREE=1
-sudo -iu piyush nix profile add nixpkgs#drawio --impure
+sudo -iu piyush env NIXPKGS_ALLOW_UNFREE=1 nix profile add nixpkgs#drawio --impure
 nix profile add nixpkgs#yazi nixpkgs#starship nixpkgs#eza
 
 git clone --depth 1 https://gitlab.com/ananicy-cpp/ananicy-cpp.git
@@ -414,9 +413,9 @@ fi
 if [[ "$extra" == "laptop" ]]; then
   systemctl enable tlp
 fi
-systemctl enable NetworkManager NetworkManager-dispatcher ananicy-cpp
+systemctl enable NetworkManager NetworkManager-dispatcher ananicy-cpp nix-daemon
 systemctl mask systemd-rfkill systemd-rfkill.socket
 systemctl disable NetworkManager-wait-online.service
 
 # cleanup
-dnf remove -y plymouth cmake make gcc-c++ systemd-devel libbpf-devel elfutils-libelf-devel clang llvm kernel-headers bpftool lzip
+dnf remove -y plymouth libbpf-devel elfutils-libelf-devel bpftool lzip
