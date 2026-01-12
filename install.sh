@@ -322,8 +322,9 @@ ln -sf /home/piyush/Documents/projects/default/dotfiles/.zshrc ~/.zshrc
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/starship.toml ~/.config
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
+nix registry remove nixpkgs
+nix registry add nixpkgs github:NixOS/nixpkgs/nixos-25.11
 systemctl restart nix-daemon
-
 sudo -iu piyush nix profile add \
   nixpkgs#firefox-esr \
   nixpkgs#hyprpicker \
