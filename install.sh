@@ -191,9 +191,9 @@ echo "Defaults pwfeedback" >/etc/sudoers.d/pwfeedback
 echo 'Defaults env_keep += "SYSTEMD_EDITOR XDG_RUNTIME_DIR WAYLAND_DISPLAY DBUS_SESSION_BUS_ADDRESS WAYLAND_SOCKET"' >/etc/sudoers.d/wayland
 chmod 440 /etc/sudoers.d/*
 # User setup
-usermod -aG wheel,video,audio,docker
+usermod -aG video,audio,docker piyush
 if [[ "$hardware" == "hardware" ]]; then
-  usermod -aG kvm,libvirt,lp
+  usermod -aG kvm,libvirt,lp piyush
 fi
 chown root:libvirt /var/lib/libvirt/images
 chmod 2775 /var/lib/libvirt/images
