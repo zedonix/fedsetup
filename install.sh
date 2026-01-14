@@ -313,7 +313,6 @@ su - piyush -c '
   rm IosevkaTerm.zip
 
   rustup-init -y
-  curl -fsSL https://opencode.ai/install | bash
 
   docker create --name omni-tools --restart no -p 127.0.0.1:1024:80 iib0011/omni-tools:latest
   docker create --name bentopdf --restart no -p 127.0.0.1:1025:8080 bentopdf/bentopdf:latest
@@ -349,7 +348,7 @@ fi
 
 cargo install stylua tex-fmt caligula yazi-build eza
 uv tool install debugpy
-pnpm add -g markdownlint-cli2 htmlhint eslint_d stylelint @fsouza/prettierd
+pnpm add -g markdownlint-cli2 htmlhint eslint_d stylelint @fsouza/prettierd opencode-ai
 luarocks install luacheck
 go install github.com/jesseduffield/lazydocker@latest
 go install go.senan.xyz/cliphist@latest
