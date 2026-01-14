@@ -340,6 +340,8 @@ sudo -iu piyush nix profile add \
   nixpkgs#jdt-language-server \
   nixpkgs#poweralertd \
   nixpkgs#upscaler \
+  nixpkgs#texlab \
+  nixpkgs#lua-language-server \
   nixpkgs#wl-clip-persist
 
 if [[ "$extra" == "laptop" ]]; then
@@ -348,7 +350,7 @@ fi
 
 cargo install stylua tex-fmt caligula yazi-build eza
 uv tool install debugpy
-pnpm add -g markdownlint-cli2 htmlhint eslint_d stylelint @fsouza/prettierd opencode-ai
+pnpm add -g markdownlint-cli2 htmlhint eslint_d stylelint @fsouza/prettierd opencode-ai vscode-langservers-extracted typescript-language-server typescript
 luarocks install luacheck
 go install github.com/jesseduffield/lazydocker@latest
 go install go.senan.xyz/cliphist@latest
