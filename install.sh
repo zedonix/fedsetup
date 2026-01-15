@@ -68,10 +68,8 @@ dnf clean all
 dnf makecache
 dnf config-manager setopt fedora-cisco-openh264.enabled=0 # cuz fuck cisco
 dnf upgrade -y --refresh
-## Adding repos
 dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm
 dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
-dnf install -y https://download.onlyoffice.com/install/desktop/editors/linux/onlyoffice-desktopeditors.x86_64.rpm
 dnf makecache
 
 dnf copr enable -y erizur/firefox-esr
@@ -79,6 +77,7 @@ dnf copr enable -y solopasha/hyprland
 dnf copr enable -y atim/starship
 
 xargs dnf install -y <pkglist.txt
+dnf install -y https://download.onlyoffice.com/install/desktop/editors/linux/onlyoffice-desktopeditors.x86_64.rpm
 
 if [[ "$extra" == "laptop" ]]; then
   cat <<'EOF' >/etc/tlp.d/01-custom.conf
@@ -314,6 +313,13 @@ su - piyush -c '
 
   rustup-init -y
 
+  cargo install stylua tex-fmt caligula yazi-build eza
+  uv tool install debugpy
+  pnpm add -g markdownlint-cli2 htmlhint eslint_d stylelint @fsouza/prettierd opencode-ai vscode-langservers-extracted typescript-language-server typescript
+  luarocks install luacheck
+  go install github.com/jesseduffield/lazydocker@latest
+  # go install go.senan.xyz/cliphist@latest
+
   docker create --name omni-tools --restart no -p 127.0.0.1:1024:80 iib0011/omni-tools:latest
   docker create --name bentopdf --restart no -p 127.0.0.1:1025:8080 bentopdf/bentopdf:latest
   docker create --name convertx --restart no -p 127.0.0.1:1026:3000 -v ./data:/app/data ghcr.io/c4illin/convertx
@@ -348,13 +354,6 @@ sudo -iu piyush nix profile add \
 if [[ "$extra" == "laptop" ]]; then
   sudo -iu piyush nix profile add nixpkgs#powersupply
 fi
-
-cargo install stylua tex-fmt caligula yazi-build eza
-uv tool install debugpy
-pnpm add -g markdownlint-cli2 htmlhint eslint_d stylelint @fsouza/prettierd opencode-ai vscode-langservers-extracted typescript-language-server typescript
-luarocks install luacheck
-go install github.com/jesseduffield/lazydocker@latest
-# go install go.senan.xyz/cliphist@latest
 
 sudo -iu piyush bemoji --download all
 
