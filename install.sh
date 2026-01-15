@@ -243,7 +243,9 @@ firewall-cmd --permanent --zone=work --remove-service=mdns
 # firewall-cmd --permanent --remove-service=dhcpv6-client
 
 # Bind dnsmasq to virbr0 only
-sed -i -E 's/^#?\s*interface=.*/interface=virbr0/; s/^#?\s*bind-interfaces.*/bind-interfaces/' /etc/dnsmasq.conf
+if [[ "$hardware" == "hardware" ]]; then
+  sed -i -E 's/^#?\s*interface=.*/interface=virbr0/; s/^#?\s*bind-interfaces.*/bind-interfaces/' /etc/dnsmasq.conf
+fi
 echo 'ListenAddress 127.0.0.1' >>/etc/ssh/sshd_config
 
 # disable llmnr
