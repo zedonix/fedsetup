@@ -67,7 +67,7 @@ gpgcheck=True
 [fedora-cisco-openh264]
 enabled=0
 EOF
-tee /etc/yum.repos.d/adoptium.repo > /dev/null <<'EOF'
+tee /etc/yum.repos.d/adoptium.repo >/dev/null <<'EOF'
 [Adoptium]
 name=Adoptium
 baseurl=https://packages.adoptium.net/artifactory/rpm/fedora/$releasever/$basearch
@@ -222,10 +222,12 @@ firewall-cmd --permanent --zone=home --add-source=192.168.0.0/24
 firewall-cmd --permanent --zone=public --remove-service=cups
 firewall-cmd --permanent --zone=public --remove-service=mdns
 firewall-cmd --permanent --zone=public --remove-port=631/tcp
-firewall-cmd --permanent --zone=libvirt --add-interface=virbr0
-firewall-cmd --permanent --zone=libvirt --add-service=dhcp
-firewall-cmd --permanent --zone=libvirt --add-service=dns
-firewall-cmd --permanent --zone=libvirt --add-masquerade
+if [[ "$hardware" == "hardware" ]]; then
+  firewall-cmd --permanent --zone=libvirt --add-interface=virbr0
+  firewall-cmd --permanent --zone=libvirt --add-service=dhcp
+  firewall-cmd --permanent --zone=libvirt --add-service=dns
+  firewall-cmd --permanent --zone=libvirt --add-masquerade
+fi
 firewall-cmd --permanent --zone=FedoraWorkstation --remove-port=1025-65535/tcp
 firewall-cmd --permanent --zone=FedoraWorkstation --remove-port=1025-65535/udp
 # firewall-cmd --permanent --zone=FedoraServer --remove-service=ssh
