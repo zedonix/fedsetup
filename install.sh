@@ -264,8 +264,8 @@ su - piyush -c '
   mkdir -p ~/.local/bin ~/.cache/cargo-target ~/.local/state/bash ~/.local/state/zsh ~/.local/share/wineprefixes
   touch ~/.local/state/bash/history ~/.local/state/zsh/history
 
-  echo todo.txt > ~/Documents/projects/wiki/index.txt
-  echo 1. Write some todos > ~/Documents/projects/wiki/todo.txt
+  echo todo.txt > ~/Documents/personal/wiki/index.txt
+  echo 1. Write some todos > ~/Documents/personal/wiki/todo.txt
   echo "if [ -z \"\$WAYLAND_DISPLAY\" ] && [ \"\$(tty)\" = \"/dev/tty1\" ]; then
     exec sway
   fi" >> ~/.bash_profile
