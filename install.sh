@@ -66,7 +66,8 @@ gpgcheck=True
 EOF
 dnf clean all
 dnf makecache
-dnf upgrade -y --refresh --exclude="openh264*"
+dnf config-manager setopt fedora-cisco-openh264.enabled=0 # cuz fuck cisco
+dnf upgrade -y --refresh
 ## Adding repos
 dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm
 dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
@@ -77,7 +78,6 @@ dnf copr enable -y erizur/firefox-esr
 dnf copr enable -y solopasha/hyprland
 dnf copr enable -y atim/starship
 
-dnf config-manager setopt fedora-cisco-openh264.enabled=0 # cuz fuck cisco
 xargs dnf install -y <pkglist.txt
 
 if [[ "$extra" == "laptop" ]]; then
