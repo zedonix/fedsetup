@@ -42,8 +42,7 @@ if [[ "$hardware" == "hardware" ]]; then
   bluetooth)
     sed -n '5p' pkgs.txt | tr ' ' '\n' | grep -v '^$' >>pkglist.txt
     ;;
-  none)
-    ;;
+  none) ;;
   esac
 fi
 
@@ -327,18 +326,18 @@ nix registry add --registry /etc/nix/registry.json nixpkgs github:NixOS/nixpkgs/
 systemctl restart nix-daemon
 sudo -iu piyush nix profile add \
   nixpkgs#bemoji \
-  nixpkgs#google-java-format \
-  nixpkgs#jdt-language-server \
   nixpkgs#poweralertd \
   nixpkgs#upscaler \
   nixpkgs#lazydocker \
   nixpkgs#networkmanager_dmenu \
   nixpkgs#wl-clip-persist \
   nixpkgs#caligula \
+  nixpkgs#google-java-format \
+  nixpkgs#jdt-language-server \
+  nixpkgs#checkstyle \
   nixpkgs#lua-language-server \
   nixpkgs#stylua \
   nixpkgs#luajitPackages.luacheck \
-  nixpkgs#checkstyle \
   nixpkgs#texlab \
   nixpkgs#python313Packages.debugpy \
   nixpkgs#tex-fmt \
