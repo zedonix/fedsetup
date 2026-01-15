@@ -73,9 +73,9 @@ dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-
 dnf install -y https://download.onlyoffice.com/install/desktop/editors/linux/onlyoffice-desktopeditors.x86_64.rpm
 dnf makecache
 
-dnf copr enable erizur/firefox-esr
-dnf copr enable solopasha/hyprland
-dnf copr enable atim/starship
+dnf copr enable -y erizur/firefox-esr
+dnf copr enable -y solopasha/hyprland
+dnf copr enable -y atim/starship
 
 dnf config-manager setopt fedora-cisco-openh264.enabled=0 # cuz fuck cisco
 xargs dnf install -y <pkglist.txt
