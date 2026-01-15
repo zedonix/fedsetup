@@ -9,15 +9,12 @@ fi
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
 cd "$SCRIPT_DIR"
 
-# Which type of install?
-# First choice: vm or hardware
 echo "Choose one:"
 select hardware in "vm" "hardware"; do
   [[ -n $hardware ]] && break
   echo "Invalid choice. Please select 1 for vm or 2 for hardware."
 done
 
-# extra choice: laptop or bluetooth or none
 if [[ "$hardware" == "hardware" ]]; then
   echo "Choose one:"
   select extra in "laptop" "bluetooth" "none"; do
@@ -28,37 +25,28 @@ else
   extra="none"
 fi
 
-# Which type of packages?
-# Main package selection
 case "$hardware" in
 vm)
   sed -n '1p;3p' pkgs.txt | tr ' ' '\n' | grep -v '^$' >>pkglist.txt
   ;;
 hardware)
-  # For hardware:max, we will add lines 5 and/or 6 later based on $extra
   sed -n '1,4p' pkgs.txt | tr ' ' '\n' | grep -v '^$' >>pkglist.txt
   ;;
 esac
 
-# For hardware:max, add lines 5 and/or 6 based on $extra
 if [[ "$hardware" == "hardware" ]]; then
   case "$extra" in
   laptop)
-    # Add both line 5 and 6
     sed -n '5,6p' pkgs.txt | tr ' ' '\n' | grep -v '^$' >>pkglist.txt
     ;;
   bluetooth)
-    # Add only line 5
     sed -n '5p' pkgs.txt | tr ' ' '\n' | grep -v '^$' >>pkglist.txt
     ;;
   none)
-    # Do not add line 5 or 6
     ;;
   esac
 fi
 
-# Install stuff
-# dnf mirror
 tee -a /etc/dnf/dnf.conf <<EOF
 fastestmirror=True
 deltarpm=True
@@ -93,9 +81,6 @@ dnf install -y https://download.onlyoffice.com/install/desktop/editors/linux/onl
 
 if [[ "$extra" == "laptop" ]]; then
   cat <<'EOF' >/etc/tlp.d/01-custom.conf
-# Custom TLP overrides for Fedora laptop
-# Focus: USB stability, AC performance, audio stability, and radio power management
-
 # -------------------------
 # USB Power Management
 # -------------------------
@@ -175,7 +160,6 @@ elif [ -r "$scaling_f" ]; then
   esac
 fi
 
-# Kernel parameter to encourage pstate driver mode on next boot (set only when pstate is supported)
 pstate_param=""
 if [ "$pstate_supported" = true ]; then
   if [ "$driver" = "intel_pstate" ]; then
@@ -201,12 +185,10 @@ echo "GRUB_GFXPAYLOAD_LINUX=text" >>/etc/default/grub
 echo "GRUB_SAVEDEFAULT=true" >>/etc/default/grub
 grub2-mkconfig -o /boot/grub2/grub.cfg
 
-# Sudo Configuration
 echo "%wheel ALL=(ALL) ALL" >/etc/sudoers.d/wheel
 echo "Defaults pwfeedback" >/etc/sudoers.d/pwfeedback
 echo 'Defaults env_keep += "SYSTEMD_EDITOR XDG_RUNTIME_DIR WAYLAND_DISPLAY DBUS_SESSION_BUS_ADDRESS WAYLAND_SOCKET"' >/etc/sudoers.d/wayland
 chmod 440 /etc/sudoers.d/*
-# User setup
 usermod -aG video,audio,docker piyush
 if [[ "$hardware" == "hardware" ]]; then
   usermod -aG kvm,libvirt,lp piyush
@@ -214,7 +196,6 @@ if [[ "$hardware" == "hardware" ]]; then
   chmod 2775 /var/lib/libvirt/images
 fi
 
-# firewalld setup
 firewall-cmd --permanent --zone=home --add-source=192.168.0.0/24
 # firewall-cmd --permanent --zone=home --remove-service=mdns
 # firewall-cmd --permanent --zone=public --remove-service=ssh
@@ -294,17 +275,13 @@ su - piyush -c '
   git clone https://github.com/zedonix/fedsetup.git ~/Documents/projects/default/fedsetup
   git clone https://github.com/zedonix/notes.git ~/Documents/projects/default/notes
   git clone https://github.com/zedonix/GruvboxTheme.git ~/Documents/projects/default/GruvboxTheme
-  git clone https://github.com/firecat53/networkmanager-dmenu.git /tmp/networkmanager-dmenu
 
-  cp /tmp/networkmanager-dmenu/networkmanager_dmenu ~/.local/bin/networkmanager-dmenu
   cp ~/Documents/projects/default/dotfiles/.config/sway/archLogo.png ~/Pictures/
   cp ~/Documents/projects/default/dotfiles/.config/sway/debLogo.png ~/Pictures/
   cp ~/Documents/projects/default/dotfiles/pics/* ~/Pictures/
   ln -sf ~/Documents/projects/default/dotfiles/.bashrc ~/.bashrc
   ln -sf ~/Documents/projects/default/dotfiles/.zshrc ~/.zshrc
   ln -sf ~/Documents/projects/default/dotfiles/.XCompose ~/.XCompose
-
-  chmod +x ~/.local/bin/networkmanager-dmenu
 
   for link in ~/Documents/projects/default/dotfiles/.config/*; do
     ln -sf $link ~/.config/
@@ -320,7 +297,6 @@ su - piyush -c '
   zoxide add /home/piyush/Documents/projects/default/fedsetup
   source ~/.bashrc
 
-  # Iosevka
   mkdir -p ~/.local/share/fonts/iosevka
   cd ~/.local/share/fonts/iosevka
   curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/IosevkaTerm.zip
@@ -328,13 +304,7 @@ su - piyush -c '
   rm IosevkaTerm.zip
 
   rustup-init -y
-
-  cargo install stylua tex-fmt caligula yazi-build eza
-  uv tool install debugpy
-  pnpm add -g markdownlint-cli2 htmlhint eslint_d stylelint @fsouza/prettierd opencode-ai vscode-langservers-extracted typescript-language-server typescript
-  luarocks install luacheck
-  go install github.com/jesseduffield/lazydocker@latest
-  # go install go.senan.xyz/cliphist@latest
+  pnpm add -g opencode-ai
 
   docker create --name omni-tools --restart no -p 127.0.0.1:1024:80 iib0011/omni-tools:latest
   docker create --name bentopdf --restart no -p 127.0.0.1:1025:8080 bentopdf/bentopdf:latest
@@ -344,7 +314,6 @@ su - piyush -c '
 rm /usr/share/fonts/google-noto-color-emoji-fonts/Noto-COLRv1.ttf
 wget https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf -O /usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf
 
-# Root dots
 mkdir -p ~/.config ~/.local/state/bash ~/.local/state/zsh
 echo '[[ -f ~/.bashrc ]] && . ~/.bashrc' >~/.bash_profile
 touch ~/.local/state/zsh/history ~/.local/state/bash/history
@@ -362,10 +331,27 @@ sudo -iu piyush nix profile add \
   nixpkgs#jdt-language-server \
   nixpkgs#poweralertd \
   nixpkgs#upscaler \
-  nixpkgs#texlab \
+  nixpkgs#lazydocker \
+  nixpkgs#networkmanager_dmenu \
+  nixpkgs#wl-clip-persist \
+  nixpkgs#caligula \
   nixpkgs#lua-language-server \
+  nixpkgs#stylua \
+  nixpkgs#luajitPackages.luacheck \
   nixpkgs#checkstyle \
-  nixpkgs#wl-clip-persist
+  nixpkgs#texlab \
+  nixpkgs#python313Packages.debugpy \
+  nixpkgs#tex-fmt \
+  nixpkgs#markdownlint-cli \
+  nixpkgs#htmlhint \
+  nixpkgs#eslint_d \
+  nixpkgs#stylelint \
+  nixpkgs#prettierd \
+  nixpkgs#vscode-langservers-extracted \
+  nixpkgs#typescript-language-server \
+  nixpkgs#typescript-go
+
+nix profile add nixpkgs#yazi nixpkgs#eza
 
 if [[ "$extra" == "laptop" ]]; then
   sudo -iu piyush nix profile add nixpkgs#powersupply
@@ -385,7 +371,6 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DENABLE_SYSTEMD=ON -DUSE_BPF_PRO
 cmake --build build --target ananicy-cpp
 cmake --install build --component Runtime
 
-# Setup gruvbox theme
 THEME_SRC="/home/piyush/Documents/projects/default/GruvboxTheme"
 THEME_DEST="/usr/share/Kvantum/Gruvbox"
 mkdir -p "$THEME_DEST"
@@ -396,7 +381,6 @@ THEME_DEST="/usr/share"
 cp -r "$THEME_SRC/themes/Gruvbox-Material-Dark" "$THEME_DEST/themes"
 cp -r "$THEME_SRC/icons/Gruvbox-Material-Dark" "$THEME_DEST/icons"
 
-# Ananicy-cpp rules
 git clone --depth=1 https://github.com/RogueScholar/ananicy.git
 git clone --depth=1 https://github.com/CachyOS/ananicy-rules.git
 mkdir -p /etc/ananicy.d/roguescholar /etc/ananicy.d/zz-cachyos
@@ -420,16 +404,12 @@ log_applied_rule = false
 cgroup_realtime_workaround = false
 EOF
 
-# Firefox policy
 mkdir -p /etc/firefox/policies
 ln -sf "/home/piyush/Documents/projects/default/dotfiles/policies.json" /etc/firefox/policies/policies.json
 
-# zram config
-# Get total memory in MiB
 TOTAL_MEM=$(awk '/MemTotal/ {print int($2 / 1024)}' /proc/meminfo)
 ZRAM_SIZE=$((TOTAL_MEM / 2))
 
-# Create zram config
 mkdir -p /etc/systemd/zram-generator.conf.d
 {
   echo "[zram0]"
@@ -447,7 +427,6 @@ mkdir -p /etc/systemd/zram-generator.conf.d
 # Requires=firewalld.service
 # EOF
 
-# Services
 # rfkill unblock bluetooth
 # modprobe btusb || true
 if [[ "$hardware" == "hardware" ]]; then
@@ -464,5 +443,4 @@ systemctl enable NetworkManager NetworkManager-dispatcher ananicy-cpp nix-daemon
 systemctl mask systemd-rfkill systemd-rfkill.socket
 systemctl disable NetworkManager-wait-online.service
 
-# cleanup
 dnf remove -y plymouth libbpf-devel elfutils-libelf-devel bpftool lzip
