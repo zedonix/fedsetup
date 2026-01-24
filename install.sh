@@ -62,12 +62,21 @@ enabled=1
 gpgcheck=1
 gpgkey=https://packages.adoptium.net/artifactory/api/gpg/key/public
 EOF
+tee /etc/yum.repos.d/wayscriber.repo >/dev/null <<'EOF'
+[wayscriber]
+name=Wayscriber Repo
+baseurl=https://wayscriber.com/rpm
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://wayscriber.com/rpm/RPM-GPG-KEY-wayscriber.asc
+EOF
 # dnf config-manager setopt fedora-cisco-openh264.enabled=0 # cuz fuck cisco
 dnf upgrade -y --refresh
 dnf install -y \
   https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
-dnf makecache --enablerepo=Adoptium
+dnf makecache --enablerepo=Adoptium,wayscriber
 
 dnf copr enable -y \
   erizur/firefox-esr \
