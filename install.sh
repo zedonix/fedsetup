@@ -71,8 +71,7 @@ dnf makecache --enablerepo=Adoptium
 
 dnf copr enable -y \
   erizur/firefox-esr \
-  solopasha/hyprland \
-  atim/starship
+  solopasha/hyprland
 
 xargs dnf install -y <pkglist.txt
 dnf clean all
