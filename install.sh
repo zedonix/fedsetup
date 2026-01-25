@@ -93,7 +93,8 @@ if [[ "$extra" == "laptop" ]]; then
 # -------------------------
 USB_AUTOSUSPEND=1
 USB_EXCLUDE_PHONE=1
-USB_EXCLUDE_BTUSB=1
+# Allow TLP to touch Bluetooth
+USB_EXCLUDE_BTUSB=0
 USB_EXCLUDE_WWAN=1
 USB_EXCLUDE_AUDIO=1
 USB_EXCLUDE_PRINTER=1
@@ -130,7 +131,8 @@ WIFI_PWR_ON_BAT=off
 # -------------------------
 # Radio Device Wizard (RDW)
 # -------------------------
-DEVICES_TO_DISABLE_ON_BAT="bluetooth wwan"
+DEVICES_TO_DISABLE_ON_BAT="bluetooth wwan nfc"
+DEVICES_TO_DISABLE_ON_STARTUP="bluetooth"
 DEVICES_TO_ENABLE_ON_BAT=""
 
 DEVICES_TO_DISABLE_ON_AC=""
@@ -264,7 +266,6 @@ EOF
 
 flatpak --system remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak --system install -y org.gtk.Gtk3theme.Adwaita-dark
-systemctl start docker.service
 su - piyush -c '
   mkdir -p ~/Downloads ~/Desktop ~/Public ~/Templates ~/Videos ~/Pictures/Screenshots/temp ~/.config
   mkdir -p ~/Documents/projects/default ~/Documents/projects ~/Documents/personal/wiki
@@ -313,10 +314,11 @@ su - piyush -c '
   rustup-init -y
   pnpm add -g opencode-ai
 
-  docker create --name omni-tools --restart no -p 127.0.0.1:1024:80 iib0011/omni-tools:latest
-  docker create --name bentopdf --restart no -p 127.0.0.1:1025:8080 bentopdf/bentopdf:latest
-  docker create --name convertx --restart no -p 127.0.0.1:1026:3000 -v ./data:/app/data ghcr.io/c4illin/convertx
-  docker create --name excalidraw --restart no -p 127.0.0.1:1027:80 excalidraw/excalidraw:latest
+  podman create --name omni-tools --restart=no -p 127.0.0.1:1024:80 docker.io/iib0011/omni-tools:latest
+  podman create --name bentopdf --restart=no -p 127.0.0.1:1025:8080 docker.io/bentopdf/bentopdf:latest
+  podman volume create convertx-data
+  podman create --name convertx --restart=no -p 127.0.0.1:1026:3000 -v convertx-data:/app/data:Z ghcr.io/c4illin/convertx
+  podman create --name excalidraw --restart=no -p 127.0.0.1:1027:80 docker.io/excalidraw/excalidraw:latest
 '
 rm /usr/share/fonts/google-noto-color-emoji-fonts/Noto-COLRv1.ttf
 wget https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf -O /usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf
@@ -360,10 +362,6 @@ sudo -iu piyush nix profile add \
 
 nix profile add nixpkgs#yazi nixpkgs#eza
 
-if [[ "$extra" == "laptop" ]]; then
-  sudo -iu piyush nix profile add nixpkgs#powersupply
-fi
-
 sudo -iu piyush bemoji --download all >/dev/null 2>&1 || true
 
 REPO="jgraph/drawio-desktop"
@@ -371,6 +369,7 @@ curl -s "https://api.github.com/repos/$REPO/releases/latest" |
   jq -r '.assets[].browser_download_url' |
   grep -E 'x86_64.*\.rpm$' |
   xargs -n1 wget
+dnf install -y ~/fedsetup/*rpm
 
 git clone --depth 1 https://gitlab.com/ananicy-cpp/ananicy-cpp.git
 cd ananicy-cpp
@@ -426,23 +425,15 @@ mkdir -p /etc/systemd/zram-generator.conf.d
   echo "fs-type = swap"
 } >/etc/systemd/zram-generator.conf.d/00-zram.conf
 
-# docker fix
-# mkdir /etc/systemd/system/docker.socket.d
-# tee /etc/systemd/system/docker.socket.d/override.conf >/dev/null <<'EOF'
-# [Unit]
-# After=firewalld.service
-# Requires=firewalld.service
-# EOF
-
 # rfkill unblock bluetooth
 # modprobe btusb || true
 if [[ "$hardware" == "hardware" ]]; then
   systemctl enable fstrim.timer acpid libvirtd.socket cups ipp-usb docker.socket
   systemctl disable dnsmasq
 fi
-if [[ "$extra" == "laptop" || "$extra" == "bluetooth" ]]; then
-  systemctl enable bluetooth
-fi
+# if [[ "$extra" == "laptop" || "$extra" == "bluetooth" ]]; then
+#   systemctl enable bluetooth
+# fi
 if [[ "$extra" == "laptop" ]]; then
   systemctl enable tlp
 fi
