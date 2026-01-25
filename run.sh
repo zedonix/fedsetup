@@ -45,9 +45,6 @@ ln -sf ~/Documents/projects/default/dotfiles/user.js "$dir/user.js"
 cp -f ~/Documents/projects/default/dotfiles/book* "$dir/bookmarkbackups/"
 
 flatpak override --user --env=GTK_THEME=Adwaita-dark --env=QT_STYLE_OVERRIDE=Adwaita-Dark
-if [[ "$hardware" == "hardware" ]]; then
-  flatpak install -y flathub com.github.wwmm.easyeffects
-fi
 if [[ "$extra" == "laptop" ]]; then
   flatpak install -y flathub com.github.d4nj1.tlpui
 fi
