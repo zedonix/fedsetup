@@ -439,6 +439,8 @@ if [[ "$extra" == "laptop" ]]; then
 fi
 systemctl enable NetworkManager NetworkManager-dispatcher ananicy-cpp nix-daemon firewalld
 systemctl mask systemd-rfkill systemd-rfkill.socket
-systemctl disable NetworkManager-wait-online.service
+systemctl disable NetworkManager-wait-online.service acpid acpid.socket
+mkdir -p /etc/systemd/logind.conf.d
+printf '[Login]\nHandlePowerKey=ignore\n' > /etc/systemd/logind.conf.d/90-ignore-power.conf
 
 dnf remove -y plymouth libbpf-devel elfutils-libelf-devel bpftool lzip
