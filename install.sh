@@ -78,7 +78,7 @@ dnf install -y \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
 dnf makecache --enablerepo=Adoptium,wayscriber
 
-dnf copr enable -y \
+dnf copr enable -y -r fedora-43-x86_64 \
   erizur/firefox-esr \
   solopasha/hyprland
 
