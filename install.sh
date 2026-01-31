@@ -285,6 +285,7 @@ BASH
   unzip -o "$file" 'extension/server/com.microsoft.java.debug.plugin-*.jar' -d /tmp
   mv /tmp/extension/server/com.microsoft.java.debug.plugin-*.jar ~/.local/share/nvim/java-debug/
   rm -rf /tmp/extension
+  rm ~/*vsix
 
   cp ~/Documents/projects/default/dotfiles/.config/sway/archLogo.png ~/Pictures/
   cp ~/Documents/projects/default/dotfiles/.config/sway/debLogo.png ~/Pictures/
@@ -307,8 +308,8 @@ BASH
   zoxide add /home/piyush/Documents/projects/default/fedsetup
   source ~/.bashrc
 
-  cd ~/.local/share/fonts/iosevka
   mkdir -p ~/.local/share/fonts/iosevka
+  cd ~/.local/share/fonts/iosevka
   curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/IosevkaTerm.zip
   unzip IosevkaTerm.zip
   rm IosevkaTerm.zip
