@@ -95,7 +95,7 @@ USB_EXCLUDE_PRINTER=1
 # -------------------------
 RUNTIME_PM_ON_AC=auto
 RUNTIME_PM_ON_BAT=auto
-RUNTIME_PM_DRIVER_DENYLIST="amdgpu nouveau nvidia"
+RUNTIME_PM_DRIVER_DENYLIST="amdgpu nouveau nvidia r8169"
 
 # -------------------------
 # AHCI / SATA
