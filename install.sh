@@ -358,11 +358,8 @@ sudo -iu piyush nix profile add \
   nixpkgs#python313Packages.debugpy \
   nixpkgs#tex-fmt \
   nixpkgs#markdownlint-cli \
-  nixpkgs#htmlhint \
   nixpkgs#eslint_d \
-  nixpkgs#stylelint \
   nixpkgs#prettierd \
-  nixpkgs#vscode-langservers-extracted \
   nixpkgs#typescript-language-server \
   nixpkgs#typescript-go
 
