@@ -337,6 +337,8 @@ ln -sf /home/piyush/Documents/projects/default/dotfiles/.zshrc ~/.zshrc
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/starship.toml ~/.config
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
+postgresql-setup --initdb
+
 nix registry add --registry /etc/nix/registry.json nixpkgs github:NixOS/nixpkgs/nixos-25.11
 systemctl restart nix-daemon
 sudo -iu piyush nix profile add \
@@ -431,7 +433,7 @@ mkdir -p /etc/systemd/zram-generator.conf.d
 # rfkill unblock bluetooth
 # modprobe btusb || true
 if [[ "$hardware" == "hardware" ]]; then
-  systemctl enable fstrim.timer libvirtd.socket cups ipp-usb docker.socket
+  systemctl enable fstrim.timer libvirtd.socket cups ipp-usb docker.socket postgresql
   systemctl disable dnsmasq
 fi
 # if [[ "$extra" == "laptop" || "$extra" == "bluetooth" ]]; then
@@ -445,6 +447,5 @@ systemctl mask systemd-rfkill systemd-rfkill.socket
 systemctl disable NetworkManager-wait-online.service
 mkdir -p /etc/systemd/logind.conf.d
 printf '[Login]\nHandlePowerKey=ignore\n' >/etc/systemd/logind.conf.d/90-ignore-power.conf
-# HandlePowerKeyLongPress
 
 dnf remove -y plymouth libbpf-devel elfutils-libelf-devel bpftool lzip
