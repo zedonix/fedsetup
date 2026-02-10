@@ -338,6 +338,9 @@ ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/starship.toml ~/
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
 postgresql-setup --initdb
+sudo -u postgres createuser piyush
+sudo -u postgres createdb piyush
+sudo -u postgres psql -c "ALTER USER piyush WITH PASSWORD 'strongpassword';"
 
 nix registry add --registry /etc/nix/registry.json nixpkgs github:NixOS/nixpkgs/nixos-25.11
 systemctl restart nix-daemon
