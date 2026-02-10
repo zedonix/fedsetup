@@ -341,6 +341,7 @@ postgresql-setup --initdb
 sudo -u postgres createuser piyush
 sudo -u postgres createdb piyush
 sudo -u postgres psql -c "ALTER USER piyush WITH PASSWORD 'strongpassword';"
+sed -i 's/^local\s\+all\s\+all\s\+peer/local all all scram-sha-256/' /var/lib/pgsql/data/pg_hba.conf
 
 nix registry add --registry /etc/nix/registry.json nixpkgs github:NixOS/nixpkgs/nixos-25.11
 systemctl restart nix-daemon
