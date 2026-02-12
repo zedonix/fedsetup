@@ -265,8 +265,8 @@ su - piyush -c 'bash -s' <<'EOF'
   mkdir -p ~/.local/bin ~/.cache/cargo-target ~/.local/state/bash ~/.local/state/zsh ~/.local/share/wineprefixes
   touch ~/.local/state/bash/history ~/.local/state/zsh/history
 
-  echo todo.txt > ~/Documents/personal/wiki/index.txt
   echo 1. Write some todos > ~/Documents/personal/wiki/todo.txt
+  echo copy me > ~/Documents/personal/wiki/paste.txt
   cat >> ~/.bash_profile <<'BASH'
 if [ -z "$WAYLAND_DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
   exec sway
@@ -308,12 +308,6 @@ BASH
   /home/piyush/Documents/projects/default/dotfiles/.config/tmux/plugins/tpm/scripts/install_plugins.sh
   zoxide add /home/piyush/Documents/projects/default/fedsetup
   source ~/.bashrc
-
-  mkdir -p ~/.local/share/fonts/iosevka
-  cd ~/.local/share/fonts/iosevka
-  curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/IosevkaTerm.zip
-  unzip IosevkaTerm.zip
-  rm IosevkaTerm.zip
 
   rustup-init -y
   cargo install clipvault --locked
