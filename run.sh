@@ -1,23 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Choose one:"
-select hardware in "vm" "hardware"; do
-  [[ -n $hardware ]] && break
-  echo "Invalid choice. Please select 1 for vm or 2 for hardware."
-done
-
-# extra choice: laptop or bluetooth or none
-if [[ "$hardware" == "hardware" ]]; then
-  echo "Choose one:"
-  select extra in "laptop" "bluetooth" "none"; do
-    [[ -n $extra ]] && break
-    echo "Invalid choice."
-  done
-else
-  extra="none"
-fi
-
 kvantummanager --set Gruvbox
 gsettings set org.gnome.desktop.interface gtk-theme 'Gruvbox-Material-Dark'
 gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
