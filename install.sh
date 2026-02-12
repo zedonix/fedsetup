@@ -356,20 +356,9 @@ sudo -iu piyush nix profile add \
   nixpkgs#networkmanager_dmenu \
   nixpkgs#wl-clip-persist \
   nixpkgs#caligula \
-  nixpkgs#google-java-format \
-  nixpkgs#jdt-language-server \
-  nixpkgs#checkstyle \
-  nixpkgs#lua-language-server \
-  nixpkgs#stylua \
-  nixpkgs#luajitPackages.luacheck \
-  nixpkgs#texlab \
   nixpkgs#python313Packages.debugpy \
-  nixpkgs#tex-fmt \
-  nixpkgs#markdownlint-cli \
-  nixpkgs#eslint_d \
   nixpkgs#prettierd \
   nixpkgs#typescript-language-server \
-  nixpkgs#typescript-go
 
 nix profile add nixpkgs#yazi nixpkgs#eza
 
