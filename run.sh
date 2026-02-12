@@ -3,14 +3,17 @@ set -e
 
 kvantummanager --set Gruvbox
 gsettings set org.gnome.desktop.interface gtk-theme 'Gruvbox-Material-Dark'
-gsettings set org.gnome.desktop.interface icon-theme "Papirus-Dark"
+gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-declare -A gsettings_keys=(
-  ["org.virt-manager.virt-manager.new-vm firmware"]="uefi"
-  ["org.virt-manager.virt-manager.new-vm cpu-default"]="host-passthrough"
-  ["org.virt-manager.virt-manager.new-vm graphics-type"]="spice"
-  ["org.virt-manager.virt-manager.new-vm machine-type "]="q35"
-)
+
+schema="org.virt-manager.virt-manager.new-vm"
+
+if gsettings list-schemas | grep -qx "$schema"; then
+  gsettings set $schema firmware 'uefi'
+  gsettings set $schema cpu-default 'host-passthrough'
+  gsettings set $schema graphics-type 'spice'
+  gsettings set $schema machine-type 'q35'
+fi
 
 for key in "${!gsettings_keys[@]}"; do
   schema="${key% *}"
