@@ -15,16 +15,6 @@ if gsettings list-schemas | grep -qx "$schema"; then
   gsettings set $schema machine-type 'q35'
 fi
 
-for key in "${!gsettings_keys[@]}"; do
-  schema="${key% *}"
-  subkey="${key#* }"
-  value="${gsettings_keys[$key]}"
-
-  if gsettings describe "$schema" "$subkey" >/dev/null; then
-    gsettings set "$schema" "$subkey" "$value"
-  fi
-done
-
 echo -n "/home/$USER/Documents/projects/default/dotfiles/ublock.txt" | wl-copy
 gh auth login
 dir=$(echo ~/.mozilla/firefox/*.default-esr)
