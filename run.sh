@@ -15,8 +15,8 @@ if gsettings list-schemas | grep -qx "$schema"; then
   gsettings set $schema machine-type 'q35'
 fi
 
-echo -n "/home/$USER/Documents/projects/default/dotfiles/ublock.txt" | wl-copy
 gh auth login
+echo -n "/home/$USER/Documents/projects/default/dotfiles/ublock.txt" | wl-copy
 dir=$(echo ~/.mozilla/firefox/*.default-esr)
 ln -sf ~/Documents/projects/default/dotfiles/user.js "$dir/user.js"
 cp -f ~/Documents/projects/default/dotfiles/book* "$dir/bookmarkbackups/"
