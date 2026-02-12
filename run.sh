@@ -26,6 +26,7 @@ declare -A gsettings_keys=(
   ["org.virt-manager.virt-manager.new-vm firmware"]="uefi"
   ["org.virt-manager.virt-manager.new-vm cpu-default"]="host-passthrough"
   ["org.virt-manager.virt-manager.new-vm graphics-type"]="spice"
+  ["org.virt-manager.virt-manager.new-vm machine-type "]="q35"
 )
 
 for key in "${!gsettings_keys[@]}"; do
