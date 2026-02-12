@@ -68,6 +68,7 @@ dnf upgrade -y --refresh
 dnf install -y \
   https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
+dnf install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
 dnf makecache --enablerepo=Adoptium
 
 dnf copr enable -y erizur/firefox-esr
@@ -359,7 +360,6 @@ sudo -iu piyush nix profile add \
   nixpkgs#google-java-format \
   nixpkgs#jdt-language-server \
   nixpkgs#checkstyle \
-  nixpkgs#lua-language-server \
   nixpkgs#stylua \
   nixpkgs#luajitPackages.luacheck \
   nixpkgs#texlab \
@@ -370,8 +370,6 @@ sudo -iu piyush nix profile add \
   nixpkgs#prettierd \
   nixpkgs#typescript-language-server \
   nixpkgs#typescript-go
-
-nix profile add nixpkgs#yazi nixpkgs#eza
 
 sudo -iu piyush bemoji --download all >/dev/null 2>&1 || true
 
