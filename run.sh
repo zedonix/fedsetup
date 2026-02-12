@@ -2,6 +2,8 @@
 set -e
 
 kvantummanager --set Gruvbox
+flatpak override --user --env=GTK_THEME=Adwaita-dark --env=QT_STYLE_OVERRIDE=Adwaita-Dark
+
 gsettings set org.gnome.desktop.interface gtk-theme 'Gruvbox-Material-Dark'
 gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
@@ -20,5 +22,3 @@ echo -n "/home/$USER/Documents/projects/default/dotfiles/ublock.txt" | wl-copy
 dir=$(echo ~/.mozilla/firefox/*.default-esr)
 ln -sf ~/Documents/projects/default/dotfiles/user.js "$dir/user.js"
 cp -f ~/Documents/projects/default/dotfiles/book* "$dir/bookmarkbackups/"
-
-flatpak override --user --env=GTK_THEME=Adwaita-dark --env=QT_STYLE_OVERRIDE=Adwaita-Dark
