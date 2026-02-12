@@ -68,8 +68,7 @@ dnf upgrade -y --refresh
 dnf install -y \
   https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
-dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release
-dnf makecache --enablerepo=Adoptium,terra
+dnf makecache --enablerepo=Adoptium
 
 dnf copr enable -y erizur/firefox-esr
 dnf copr enable -y solopasha/hyprland
@@ -309,6 +308,12 @@ BASH
   zoxide add /home/piyush/Documents/projects/default/fedsetup
   source ~/.bashrc
 
+  mkdir -p ~/.local/share/fonts/iosevka
+  cd ~/.local/share/fonts/iosevka
+  curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/IosevkaTerm.zip
+  unzip IosevkaTerm.zip
+  rm IosevkaTerm.zip
+
   rustup-init -y
   cargo install clipvault --locked
   cargo install typeman --no-default-features --features tui
@@ -354,6 +359,7 @@ sudo -iu piyush nix profile add \
   nixpkgs#google-java-format \
   nixpkgs#jdt-language-server \
   nixpkgs#checkstyle \
+  nixpkgs#lua-language-server \
   nixpkgs#stylua \
   nixpkgs#luajitPackages.luacheck \
   nixpkgs#texlab \
@@ -364,6 +370,8 @@ sudo -iu piyush nix profile add \
   nixpkgs#prettierd \
   nixpkgs#typescript-language-server \
   nixpkgs#typescript-go
+
+nix profile add nixpkgs#yazi nixpkgs#eza
 
 sudo -iu piyush bemoji --download all >/dev/null 2>&1 || true
 
