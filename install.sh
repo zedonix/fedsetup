@@ -278,6 +278,13 @@ BASH
   git clone https://github.com/zedmakesense/notes.git ~/Documents/projects/default/notes
   git clone https://github.com/zedmakesense/GruvboxTheme.git ~/Documents/projects/default/GruvboxTheme
 
+  ya pkg add bennyyip/gruvbox-dark
+  ya pkg add dedukun/relative-motions
+  ya pkg add yazi-rs/plugins:full-border
+  ya pkg add yazi-rs/plugins:smart-paste
+  ya pkg add yazi-rs/plugins:zoom
+  ya pkg add yazi-rs/plugins:jump-to-char
+
   mkdir -p ~/.local/share/nvim/java-debug
   url=$(curl -fsSL 'https://open-vsx.org/api/vscjava/vscode-java-debug' | grep '"download"' | head -1 | sed -E 's/.*"download": *"([^"]+)".*/\1/')
   file=${url##*/}
