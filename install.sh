@@ -312,6 +312,7 @@ BASH
   wget -c -O "$file" "$url"
   unzip -o "$file" 'extension/server/com.microsoft.java.debug.plugin-*.jar' -d /tmp
   mv /tmp/extension/server/com.microsoft.java.debug.plugin-*.jar ~/.local/share/java-debug/
+  ln -sf ~/.local/share/java-debug/com.microsoft.java.debug.plugin-*.jar ~/.local/share/java-debug/server.jar
   rm ~/*vsix
 
   mkdir -p ~/.local/share/fonts/iosevka
