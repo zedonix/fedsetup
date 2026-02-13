@@ -278,22 +278,6 @@ BASH
   git clone https://github.com/zedmakesense/notes.git ~/Documents/projects/default/notes
   git clone https://github.com/zedmakesense/GruvboxTheme.git ~/Documents/projects/default/GruvboxTheme
 
-  ya pkg add bennyyip/gruvbox-dark
-  ya pkg add dedukun/relative-motions
-  ya pkg add yazi-rs/plugins:full-border
-  ya pkg add yazi-rs/plugins:smart-paste
-  ya pkg add yazi-rs/plugins:zoom
-  ya pkg add yazi-rs/plugins:jump-to-char
-
-  mkdir -p ~/.local/share/nvim/java-debug
-  url=$(curl -fsSL 'https://open-vsx.org/api/vscjava/vscode-java-debug' | grep '"download"' | head -1 | sed -E 's/.*"download": *"([^"]+)".*/\1/')
-  file=${url##*/}
-  wget -c -O "$file" "$url"
-  unzip -o "$file" 'extension/server/com.microsoft.java.debug.plugin-*.jar' -d /tmp
-  mv /tmp/extension/server/com.microsoft.java.debug.plugin-*.jar ~/.local/share/nvim/java-debug/
-  rm -rf /tmp/extension
-  rm ~/*vsix
-
   cp ~/Documents/projects/default/dotfiles/.config/sway/archLogo.png ~/Pictures/
   cp ~/Documents/projects/default/dotfiles/.config/sway/debLogo.png ~/Pictures/
   cp ~/Documents/projects/default/dotfiles/pics/* ~/Pictures/
@@ -315,11 +299,33 @@ BASH
   zoxide add /home/piyush/Documents/projects/default/fedsetup
   source ~/.bashrc
 
+  ya pkg add bennyyip/gruvbox-dark
+  ya pkg add dedukun/relative-motions
+  ya pkg add yazi-rs/plugins:full-border
+  ya pkg add yazi-rs/plugins:smart-paste
+  ya pkg add yazi-rs/plugins:zoom
+  ya pkg add yazi-rs/plugins:jump-to-char
+
+  mkdir -p ~/.local/share/nvim/java-debug
+  url=$(curl -fsSL 'https://open-vsx.org/api/vscjava/vscode-java-debug' | grep '"download"' | head -1 | sed -E 's/.*"download": *"([^"]+)".*/\1/')
+  file=${url##*/}
+  wget -c -O "$file" "$url"
+  unzip -o "$file" 'extension/server/com.microsoft.java.debug.plugin-*.jar' -d /tmp
+  mv /tmp/extension/server/com.microsoft.java.debug.plugin-*.jar ~/.local/share/java-debug/
+  rm ~/*vsix
+
   mkdir -p ~/.local/share/fonts/iosevka
   cd ~/.local/share/fonts/iosevka
   curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/IosevkaTerm.zip
   unzip IosevkaTerm.zip
   rm IosevkaTerm.zip
+
+  wget -O /tmp/zed.tar.gz "https://cloud.zed.dev/releases/stable/latest/download?asset=zed&arch=x86_64&os=linux&source=docs"
+  tar -xvf /tmp/zed.tar.gz -C ~/.local
+  ln -sf ~/.local/zed.app/bin/zed ~/.local/bin/zed
+  cp ~/.local/zed.app/share/applications/zed.desktop ~/.local/share/applications/dev.zed.Zed.desktop
+  sed -i "s|Icon=zed|Icon=$HOME/.local/zed.app/share/icons/hicolor/512x512/apps/zed.png|g" ~/.local/share/applications/dev.zed.Zed.desktop
+  sed -i "s|Exec=zed|Exec=$HOME/.local/zed.app/libexec/zed-editor|g" ~/.local/share/applications/dev.zed.Zed.desktop
 
   rustup-init -y
   cargo install clipvault --locked
