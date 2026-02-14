@@ -306,15 +306,6 @@ BASH
   ya pkg add yazi-rs/plugins:zoom
   ya pkg add yazi-rs/plugins:jump-to-char
 
-  mkdir -p ~/.local/share/nvim/java-debug
-  url=$(curl -fsSL 'https://open-vsx.org/api/vscjava/vscode-java-debug' | grep '"download"' | head -1 | sed -E 's/.*"download": *"([^"]+)".*/\1/')
-  file=${url##*/}
-  wget -c -O "$file" "$url"
-  unzip -o "$file" 'extension/server/com.microsoft.java.debug.plugin-*.jar' -d /tmp
-  mv /tmp/extension/server/com.microsoft.java.debug.plugin-*.jar ~/.local/share/java-debug/
-  ln -sf ~/.local/share/java-debug/com.microsoft.java.debug.plugin-*.jar ~/.local/share/java-debug/server.jar
-  rm ~/*vsix
-
   mkdir -p ~/.local/share/fonts/iosevka
   cd ~/.local/share/fonts/iosevka
   curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/IosevkaTerm.zip
@@ -371,8 +362,6 @@ sudo -iu piyush nix profile add \
   nixpkgs#wl-clip-persist \
   nixpkgs#caligula \
   nixpkgs#python313Packages.debugpy \
-  nixpkgs#prettierd \
-  nixpkgs#typescript-language-server \
 
 nix profile add nixpkgs#yazi nixpkgs#eza
 
@@ -442,12 +431,9 @@ mkdir -p /etc/systemd/zram-generator.conf.d
 # rfkill unblock bluetooth
 # modprobe btusb || true
 if [[ "$hardware" == "hardware" ]]; then
-  systemctl enable fstrim.timer libvirtd.socket cups ipp-usb docker.socket postgresql
+  systemctl enable fstrim.timer libvirtd.socket cups ipp-usb docker.socket
   systemctl disable dnsmasq
 fi
-# if [[ "$extra" == "laptop" || "$extra" == "bluetooth" ]]; then
-#   systemctl enable bluetooth
-# fi
 if [[ "$extra" == "laptop" ]]; then
   systemctl enable tlp
   nmcli radio wifi off
