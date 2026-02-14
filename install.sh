@@ -355,13 +355,18 @@ nix registry add --registry /etc/nix/registry.json nixpkgs github:NixOS/nixpkgs/
 systemctl restart nix-daemon
 sudo -iu piyush nix profile add \
   nixpkgs#bemoji \
-  nixpkgs#poweralertd \
-  nixpkgs#upscaler \
   nixpkgs#lazydocker \
   nixpkgs#wayscriber \
   nixpkgs#networkmanager_dmenu \
   nixpkgs#wl-clip-persist \
   nixpkgs#python313Packages.debugpy \
+
+
+if [[ "$extra" == "laptop" ]]; then
+  sudo -iu piyush nix profile add \
+    nixpkgs#poweralertd \
+    nixpkgs#upscaler \
+fi
 
 nix profile add nixpkgs#yazi nixpkgs#eza
 
