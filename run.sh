@@ -14,8 +14,14 @@ if gsettings list-schemas | grep -qx "$schema"; then
   gsettings set $schema firmware 'uefi'
   gsettings set $schema cpu-default 'host-passthrough'
   gsettings set $schema graphics-type 'spice'
-  gsettings set $schema machine-type 'q35'
 fi
+
+ya pkg add bennyyip/gruvbox-dark
+ya pkg add dedukun/relative-motions
+ya pkg add yazi-rs/plugins:full-border
+ya pkg add yazi-rs/plugins:smart-paste
+ya pkg add yazi-rs/plugins:zoom
+ya pkg add yazi-rs/plugins:jump-to-char
 
 gh auth login
 echo -n "/home/$USER/Documents/projects/default/dotfiles/ublock.txt" | wl-copy

@@ -300,13 +300,6 @@ BASH
   zoxide add /home/piyush/Documents/projects/default/fedsetup
   source ~/.bashrc
 
-  ya pkg add bennyyip/gruvbox-dark
-  ya pkg add dedukun/relative-motions
-  ya pkg add yazi-rs/plugins:full-border
-  ya pkg add yazi-rs/plugins:smart-paste
-  ya pkg add yazi-rs/plugins:zoom
-  ya pkg add yazi-rs/plugins:jump-to-char
-
   mkdir -p ~/.local/share/fonts/iosevka
   cd ~/.local/share/fonts/iosevka
   curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/IosevkaTerm.zip
@@ -344,6 +337,7 @@ ln -sf /home/piyush/Documents/projects/default/dotfiles/.zshrc ~/.zshrc
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/starship.toml ~/.config
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
+systemctl start postgresql.service
 postgresql-setup --initdb
 sudo -u postgres createuser piyush
 sudo -u postgres psql <<'SQL'
