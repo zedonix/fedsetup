@@ -262,7 +262,7 @@ loginctl enable-linger piyush
 su - piyush -c 'bash -s' <<'EOF'
   mkdir -p ~/Downloads ~/Desktop ~/Public ~/Templates ~/Videos ~/Pictures/Screenshots/temp ~/.config
   mkdir -p ~/Documents/projects/default ~/Documents/projects ~/Documents/personal/wiki
-  mkdir -p ~/.local/bin ~/.cache/cargo-target ~/.local/state/bash ~/.local/state/zsh ~/.local/share/wineprefixes
+  mkdir -p ~/.local/bin ~/.cache/cargo-target ~/.local/state/bash ~/.local/state/zsh ~/.local/share/wineprefixes ~/.local/share/applications
   touch ~/.local/state/bash/history ~/.local/state/zsh/history
 
   echo 1. Write some todos > ~/Documents/personal/wiki/todo.txt
