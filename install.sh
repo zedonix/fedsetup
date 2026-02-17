@@ -123,12 +123,13 @@ SOUND_POWER_SAVE_CONTROLLER=N
 # -------------------------
 # Radio Device Wizard (RDW)
 # -------------------------
-DEVICES_TO_DISABLE_ON_BAT=""
-DEVICES_TO_DISABLE_ON_STARTUP="bluetooth nfc wwan"
-DEVICES_TO_ENABLE_ON_BAT=""
+DEVICES_TO_DISABLE_ON_STARTUP="bluetooth nfc wwan wifi"
 
-DEVICES_TO_DISABLE_ON_AC=""
-DEVICES_TO_ENABLE_ON_AC=""
+# DEVICES_TO_DISABLE_ON_BAT=""
+# DEVICES_TO_ENABLE_ON_BAT=""
+
+# DEVICES_TO_DISABLE_ON_AC=""
+# DEVICES_TO_ENABLE_ON_AC=""
 
 # DEVICES_TO_DISABLE_ON_LAN_CONNECT="wifi"
 # DEVICES_TO_DISABLE_ON_WIFI_CONNECT="wwan"
@@ -435,7 +436,7 @@ if [[ "$hardware" == "hardware" ]]; then
 fi
 if [[ "$extra" == "laptop" ]]; then
   systemctl enable tlp
-  nmcli radio wifi off
+  # nmcli radio wifi off
 fi
 systemctl enable NetworkManager NetworkManager-dispatcher ananicy-cpp nix-daemon firewalld
 systemctl mask systemd-rfkill systemd-rfkill.socket
