@@ -317,9 +317,8 @@ BASH
   rustup-init -y
   cargo install clipvault --locked
   cargo install caligula --locked
-  cargo install typeman --no-default-features --features tui
+  # cargo install typeman --no-default-features --features tui
   pnpm add -g opencode-ai sql-formatter
-  uv tool install debugpy
 
   podman create --name omni-tools --restart=no -p 127.0.0.1:1024:80 docker.io/iib0011/omni-tools:latest
   podman create --name bentopdf --restart=no -p 127.0.0.1:1025:8080 docker.io/bentopdf/bentopdf:latest
@@ -355,12 +354,12 @@ sudo -iu piyush nix profile add \
   nixpkgs#lazydocker \
   nixpkgs#wayscriber \
   nixpkgs#networkmanager_dmenu \
-  nixpkgs#wl-clip-persist \
+  nixpkgs#wl-clip-persist
 
 if [[ "$extra" == "laptop" ]]; then
   sudo -iu piyush nix profile add \
-    nixpkgs#poweralertd \
-    # nixpkgs#upscaler \
+    nixpkgs#poweralertd
+  # nixpkgs#upscaler
 fi
 
 nix profile add nixpkgs#yazi nixpkgs#eza
