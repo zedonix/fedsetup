@@ -318,7 +318,7 @@ BASH
   cargo install clipvault --locked
   cargo install caligula --locked
   # cargo install typeman --no-default-features --features tui
-  pnpm add -g opencode-ai sql-formatter
+  pnpm add -g opencode-ai
   go install github.com/air-verse/air@latest
 
   podman create --name omni-tools --restart=no -p 127.0.0.1:1024:80 docker.io/iib0011/omni-tools:latest
