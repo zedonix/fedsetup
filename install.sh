@@ -346,7 +346,7 @@ sudo -u postgres psql <<'SQL'
 ALTER USER piyush WITH PASSWORD 'strongpassword';
 ALTER USER postgres WITH PASSWORD 'strongpassword';
 SQL
-sed -i "s/^local\s\+all\s\+all\s\+peer/local all all scram-sha-256/" /var/lib/pgsql/data/pg_hba.conf
+sed -i -E 's/^host[[:space:]]+all[[:space:]]+all[[:space:]]+127\.0\.0\.1\/32[[:space:]]+(ident|md5|scram-sha-256)/host    all    all    127.0.0.1\/32    scram-sha-256/' /var/lib/pgsql/data/pg_hba.conf
 
 nix registry add --registry /etc/nix/registry.json nixpkgs github:NixOS/nixpkgs/nixos-25.11
 systemctl restart nix-daemon
