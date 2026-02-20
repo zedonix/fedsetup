@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -euox pipefail
 
 if [ "$(id -u)" -ne 0 ]; then
   echo "This script must be run as root"
@@ -339,8 +339,8 @@ ln -sf /home/piyush/Documents/projects/default/dotfiles/.zshrc ~/.zshrc
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/starship.toml ~/.config
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
-systemctl start postgresql.service
 postgresql-setup --initdb
+systemctl start postgresql.service
 sudo -u postgres createuser piyush
 sudo -u postgres psql <<'SQL'
 ALTER USER piyush WITH PASSWORD 'strongpassword';
