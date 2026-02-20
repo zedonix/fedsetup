@@ -327,8 +327,8 @@ BASH
   podman create --name convertx --restart=no -p 127.0.0.1:1026:3000 -v convertx-data:/app/data:Z ghcr.io/c4illin/convertx
   podman create --name excalidraw --restart=no -p 127.0.0.1:1027:80 docker.io/excalidraw/excalidraw:latest
 EOF
-# rm /usr/share/fonts/google-noto-color-emoji-fonts/Noto-COLRv1.ttf
-# wget https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf -O /usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf
+rm /usr/share/fonts/google-noto-color-emoji-fonts/Noto-COLRv1.ttf
+wget https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf -O /usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf
 
 mkdir -p ~/.config ~/.local/state/bash ~/.local/state/zsh
 echo '[[ -f ~/.bashrc ]] && . ~/.bashrc' >~/.bash_profile
