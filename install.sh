@@ -317,7 +317,7 @@ BASH
   rustup-init -y
   cargo install clipvault --locked
   cargo install caligula --locked
-  # cargo install typeman --no-default-features --features tui
+  cargo install typeman --no-default-features --features tui
   pnpm add -g opencode-ai
   go install github.com/air-verse/air@latest
 
