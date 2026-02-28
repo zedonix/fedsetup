@@ -320,6 +320,7 @@ BASH
   cargo install typeman --no-default-features --features tui
   pnpm add -g opencode-ai prettier
   go install github.com/air-verse/air@latest
+  go install github.com/a-h/templ/cmd/templ@latest
 
   podman create --name omni-tools --restart=no -p 127.0.0.1:1024:80 docker.io/iib0011/omni-tools:latest
   podman create --name bentopdf --restart=no -p 127.0.0.1:1025:8080 docker.io/bentopdf/bentopdf:latest
