@@ -266,8 +266,6 @@ su - piyush -c 'bash -s' <<'EOF'
   mkdir -p ~/.local/bin ~/.cache/cargo-target ~/.local/state/bash ~/.local/state/zsh ~/.local/share/wineprefixes ~/.local/share/applications
   touch ~/.local/state/bash/history ~/.local/state/zsh/history
 
-  echo 1. Write some todos > ~/Documents/personal/wiki/todo.txt
-  echo copy me > ~/Documents/personal/wiki/paste.txt
   cat >> ~/.bash_profile <<'BASH'
 if [ -z "$WAYLAND_DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
   exec sway
