@@ -178,9 +178,9 @@ if [ -n "$pstate_param" ]; then
 else
   all_params="$extra_params"
 fi
-sed -i 's/[[:space:]]*\b\(rhgb\|quiet\)\b[[:space:]]*/ /g' /etc/default/grub
-sed -i "s/^\(GRUB_CMDLINE_LINUX=\"[^\"]*\)/\1 $all_params/" /etc/default/grub
-sed -i 's/^#GRUB_TIMEOUT=5/GRUB_TIMEOUT=2/' /etc/default/grub
+sed -i 's/[[:space:]]*\b\(rhgb\|quiet\)\b[[:space:]]*//g' /etc/default/grub
+sed -i "s/^\(GRUB_CMDLINE_LINUX=\"[^\"]*\)/\1$all_params/" /etc/default/grub
+sed -i 's/^GRUB_TIMEOUT=5/GRUB_TIMEOUT=2/' /etc/default/grub
 echo "GRUB_DISABLE_OS_PROBER=false" >>/etc/default/grub
 echo "GRUB_GFXMODE=text" >>/etc/default/grub
 echo "GRUB_GFXPAYLOAD_LINUX=text" >>/etc/default/grub
@@ -310,7 +310,7 @@ BASH
   wget -O /tmp/zed.tar.gz "https://cloud.zed.dev/releases/stable/latest/download?asset=zed&arch=x86_64&os=linux&source=docs"
   tar -xvf /tmp/zed.tar.gz -C ~/.local
   ln -sf ~/.local/zed.app/bin/zed ~/.local/bin/zed
-  cp ~/.local/zed.app/share/applications/zed.desktop ~/.local/share/applications/dev.zed.Zed.desktop
+  cp ~/.local/zed.app/share/applications/* ~/.local/share/applications/
   sed -i "s|Icon=zed|Icon=$HOME/.local/zed.app/share/icons/hicolor/512x512/apps/zed.png|g" ~/.local/share/applications/dev.zed.Zed.desktop
   sed -i "s|Exec=zed|Exec=$HOME/.local/zed.app/libexec/zed-editor|g" ~/.local/share/applications/dev.zed.Zed.desktop
 
@@ -340,14 +340,14 @@ ln -sf /home/piyush/Documents/projects/default/dotfiles/.zshrc ~/.zshrc
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/starship.toml ~/.config
 ln -sf /home/piyush/Documents/projects/default/dotfiles/.config/nvim/ ~/.config
 
-postgresql-setup --initdb
-systemctl start postgresql.service
-sudo -u postgres createuser piyush
-sudo -u postgres psql <<'SQL'
-ALTER USER piyush WITH PASSWORD 'strongpassword';
-ALTER USER postgres WITH PASSWORD 'strongpassword';
-SQL
-sed -i -E 's/^host[[:space:]]+all[[:space:]]+all[[:space:]]+127\.0\.0\.1\/32[[:space:]]+(ident|md5|scram-sha-256)/host    all    all    127.0.0.1\/32    scram-sha-256/' /var/lib/pgsql/data/pg_hba.conf
+# postgresql-setup --initdb
+# systemctl start postgresql.service
+# sudo -u postgres createuser piyush
+# sudo -u postgres psql <<'SQL'
+# ALTER USER piyush WITH PASSWORD 'strongpassword';
+# ALTER USER postgres WITH PASSWORD 'strongpassword';
+# SQL
+# sed -i -E 's/^host[[:space:]]+all[[:space:]]+all[[:space:]]+127\.0\.0\.1\/32[[:space:]]+(ident|md5|scram-sha-256)/host    all    all    127.0.0.1\/32    scram-sha-256/' /var/lib/pgsql/data/pg_hba.conf
 
 nix registry add --registry /etc/nix/registry.json nixpkgs github:NixOS/nixpkgs/nixos-25.11
 systemctl restart nix-daemon
