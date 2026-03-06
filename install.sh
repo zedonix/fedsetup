@@ -71,7 +71,6 @@ dnf install -y \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
 dnf makecache --enablerepo=Adoptium
 
-dnf copr enable -y erizur/firefox-esr
 dnf copr enable -y solopasha/hyprland
 
 xargs dnf install -y <pkglist.txt
@@ -413,7 +412,7 @@ cgroup_realtime_workaround = false
 EOF
 
 mkdir -p /etc/firefox/policies
-ln -sf "/home/piyush/Documents/projects/default/dotfiles/policies.json" /etc/firefox/policies/policies.json
+ln -sf "/home/piyush/Documents/projects/default/dotfiles/firefox/policies.json" /etc/firefox/policies/policies.json
 
 TOTAL_MEM=$(awk '/MemTotal/ {print int($2 / 1024)}' /proc/meminfo)
 ZRAM_SIZE=$((TOTAL_MEM / 2))

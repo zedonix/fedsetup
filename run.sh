@@ -16,10 +16,12 @@ if gsettings list-schemas | grep -qx "$schema"; then
   gsettings set $schema graphics-type 'spice'
 fi
 
-echo -n "/home/$USER/Documents/projects/default/dotfiles/ublock.txt" | wl-copy
-dir=$(echo ~/.mozilla/firefox/*.default-esr)
-ln -sf ~/Documents/projects/default/dotfiles/user.js "$dir/user.js"
-cp -f ~/Documents/projects/default/dotfiles/book* "$dir/bookmarkbackups/"
+echo -n "/home/$USER/Documents/projects/default/dotfiles/firefox/ublock.txt" | wl-copy
+echo -n "/home/$USER/Documents/projects/default/dotfiles/firefox/stylux-sidebar.css" | wl-copy
+dir=$(echo ~/.mozilla/firefox/*.default-release)
+ln -sf ~/Documents/projects/default/dotfiles/firefox/user.js "$dir/"
+ln -sf ~/Documents/projects/default/dotfiles/firefox/userChrome.css "$dir/chrome/"
+cp -f ~/Documents/projects/default/dotfiles/firefox/book* "$dir/bookmarkbackups/"
 
 ya pkg add bennyyip/gruvbox-dark
 ya pkg add dedukun/relative-motions
