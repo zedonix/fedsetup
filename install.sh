@@ -71,8 +71,6 @@ dnf install -y \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm
 dnf makecache --enablerepo=Adoptium
 
-dnf copr enable -y solopasha/hyprland
-
 xargs dnf install -y <pkglist.txt
 dnf clean all
 dnf makecache
@@ -198,10 +196,6 @@ if [[ "$hardware" == "hardware" ]]; then
 fi
 
 firewall-cmd --permanent --zone=home --add-source=192.168.0.0/24
-# firewall-cmd --permanent --zone=home --remove-service=mdns
-# firewall-cmd --permanent --zone=public --remove-service=ssh
-# firewall-cmd --zone=public --permanent --add-rich-rule='rule family="ipv4" source address="192.168.0.0/24" service name="ssh" accept'
-# firewall-cmd --permanent --zone=public --remove-service=cups
 firewall-cmd --permanent --zone=public --remove-service=mdns
 # firewall-cmd --permanent --zone=public --remove-port=631/tcp
 if [[ "$hardware" == "hardware" ]]; then
@@ -212,14 +206,6 @@ if [[ "$hardware" == "hardware" ]]; then
 fi
 firewall-cmd --permanent --zone=FedoraWorkstation --remove-port=1025-65535/tcp
 firewall-cmd --permanent --zone=FedoraWorkstation --remove-port=1025-65535/udp
-# firewall-cmd --permanent --zone=FedoraServer --remove-service=ssh
-# firewall-cmd --permanent --zone=FedoraWorkstation --remove-service=ssh
-# firewall-cmd --permanent --zone=dmz --remove-service=ssh
-# firewall-cmd --permanent --zone=external --remove-service=ssh
-# firewall-cmd --permanent --zone=internal --remove-service=ssh
-# firewall-cmd --permanent --zone=nm-shared --remove-service=ssh
-# firewall-cmd --permanent --zone=work --remove-service=ssh
-# firewall-cmd --permanent --zone=work --remove-service=ssh
 firewall-cmd --permanent --zone=work --remove-service=mdns
 # firewall-cmd --set-log-denied=all
 # firewall-cmd --permanent --remove-service=dhcpv6-client
@@ -312,12 +298,7 @@ BASH
   sed -i "s|Exec=zed|Exec=$HOME/.local/zed.app/libexec/zed-editor|g" ~/.local/share/applications/dev.zed.Zed.desktop
 
   rustup-init -y
-  cargo install clipvault --locked
-  cargo install caligula --locked
   cargo install typeman --no-default-features --features tui
-  pnpm add -g opencode-ai prettier
-  go install github.com/air-verse/air@latest
-  go install github.com/a-h/templ/cmd/templ@latest
 
   podman create --name omni-tools --restart=no -p 127.0.0.1:1024:80 docker.io/iib0011/omni-tools:latest
   podman create --name bentopdf --restart=no -p 127.0.0.1:1025:8080 docker.io/bentopdf/bentopdf:latest
@@ -353,7 +334,13 @@ sudo -iu piyush nix profile add \
   nixpkgs#lazydocker \
   nixpkgs#wayscriber \
   nixpkgs#networkmanager_dmenu \
-  nixpkgs#wl-clip-persist
+  nixpkgs#clipse \
+  nixpkgs#hyprpicker \
+  nixpkgs#caligula \
+  nixpkgs#air \
+  nixpkgs#templ \
+  nixpkgs#prettier \
+  nixpkgs#opencode
 
 if [[ "$extra" == "laptop" ]]; then
   sudo -iu piyush nix profile add \

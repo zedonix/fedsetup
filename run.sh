@@ -16,8 +16,8 @@ if gsettings list-schemas | grep -qx "$schema"; then
   gsettings set $schema graphics-type 'spice'
 fi
 
+cat "/home/$USER/Documents/projects/default/dotfiles/firefox/stylux-sidebar.css" | wl-copy
 echo -n "/home/$USER/Documents/projects/default/dotfiles/firefox/ublock.txt" | wl-copy
-echo -n "/home/$USER/Documents/projects/default/dotfiles/firefox/stylux-sidebar.css" | wl-copy
 dir=$(echo ~/.mozilla/firefox/*.default-release)
 ln -sf ~/Documents/projects/default/dotfiles/firefox/user.js "$dir/"
 ln -sf ~/Documents/projects/default/dotfiles/firefox/userChrome.css "$dir/chrome/"
